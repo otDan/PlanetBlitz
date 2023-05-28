@@ -1,11 +1,11 @@
 extends Node2D
 
 var thruster: Sprite2D
-@export var radius: float = 150.0  # Adjust the radius as needed
+@export var radius: float = 100.0  # Adjust the radius as needed
 @export var targetRotation: float = PI  # Set the target rotation for left side
-@export var rotationSpeed: float = 30.0  # Adjust the rotation speed as needed
+@export var rotationSpeed: float = 15.0  # Adjust the rotation speed as needed
 @export var acceleration: float = 150.0  # Adjust the acceleration as needed
-@export var deceleration: float = 1.0  # Adjust the deceleration as needed
+@export var deceleration: float = 2.0  # Adjust the deceleration as needed
 
 var velocity: Vector2 = Vector2.ZERO
 
@@ -39,7 +39,3 @@ func _process(delta):
 		velocity = velocity.lerp(Vector2.ZERO, deceleration * delta)
 
 	position -= velocity * delta
-
-func lerp_angle(start: float, end: float, weight: float) -> float:
-	var difference = fmod(end - start + 3 * PI, 2 * PI) - PI
-	return fmod(start + difference * weight + 2 * PI, 2 * PI) - PI

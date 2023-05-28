@@ -1,76 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkeg2itkwy8vv"]
+[gd_scene load_steps=4 format=3 uid="uid://bkeg2itkwy8vv"]
 
 [ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://player.tscn" id="2_80sai"]
 [ext_resource type="Environment" uid="uid://d08mq5h5li88u" path="res://space_envirnonment.tres" id="2_357tu"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_axwkx"]
-
-[sub_resource type="Shader" id="Shader_thr37"]
-code = "shader_type canvas_item;
-
-uniform float atmosphere_radius = 0.5;
-uniform sampler2D SCREEN_TEXTURE: hint_screen_texture, filter_linear_mipmap;
-uniform vec4 outer_color: source_color = vec4(0.2, 0.5, 0.8, 1.0);
-uniform vec4 inner_color: source_color = vec4(0.5, 0.8, 1.0, 1.0);
-
-
-void fragment() {
-    vec2 center = vec2(0.5, 0.5);
-    float distance = distance(center, UV);
-
-    // Discard fragments outside of the circular shape
-    if (distance > 0.5) {
-        discard;
-    }
-
-    // Sample the color from the sprite texture
-    vec4 sprite_color = texture(SCREEN_TEXTURE, UV);
-
-    // Calculate the intensity of the atmosphere based on the distance
-    float intensity = smoothstep(atmosphere_radius - 0.01, atmosphere_radius, distance);
-
-    // Calculate the final color by interpolating between outer and inner color based on intensity
-    vec4 final_color = mix(outer_color, inner_color, intensity);
-
-    // Mix the final color with the sprite color
-    final_color.rgb = mix(final_color.rgb, sprite_color.rgb, sprite_color.a);
-
-    COLOR = final_color;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7j8w"]
-shader = SubResource("Shader_thr37")
-shader_parameter/atmosphere_radius = 0.486
-shader_parameter/outer_color = Color(0.701961, 0.254902, 0.180392, 1)
-shader_parameter/inner_color = Color(0.858824, 0.772549, 0.901961, 1)
-
-[sub_resource type="Gradient" id="Gradient_5hsr2"]
-colors = PackedColorArray(0, 0, 0, 1, 0.0431373, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_qnfav"]
-gradient = SubResource("Gradient_5hsr2")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hj3jg"]
+size = Vector2(100, 100)
 
 [node name="Main" type="Node"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-gravity_scale = 0.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-shape = SubResource("CircleShape2D_axwkx")
-
-[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
-material = SubResource("ShaderMaterial_d7j8w")
-texture = SubResource("GradientTexture2D_qnfav")
-
 [node name="PointLight2D" type="PointLight2D" parent="."]
-visible = false
-position = Vector2(-2, -2)
+position = Vector2(53, -55)
 texture = SubResource("PlaceholderTexture2D_hj3jg")
 
 [node name="Player" parent="." instance=ExtResource("2_80sai")]

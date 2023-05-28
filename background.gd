@@ -3,9 +3,10 @@ extends ParallaxBackground
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	generate_stars($FarStars, 150, Vector2(0.5, 0.75), Rect2(Vector2(0, 0), DisplayServer.screen_get_size()))
-	generate_stars($Stars, 70, Vector2(1, 1.25), Rect2(Vector2(0, 0), DisplayServer.screen_get_size()))
-	generate_stars($CloseStars, 20, Vector2(2, 2.5), Rect2(Vector2(0, 0), DisplayServer.screen_get_size()))
+	var gen_area = Rect2(0, 0, 4000, 4000)
+	generate_stars($FarStars, 500, Vector2(0.5, 0.75), gen_area)
+	generate_stars($Stars, 270, Vector2(1, 1.25), gen_area)
+	generate_stars($CloseStars, 80, Vector2(2, 3), gen_area)
 
 
 func generate_stars(parallaxLayer: ParallaxLayer, star_count: int, star_size_range: Vector2, spawn_area: Rect2):

@@ -23,16 +23,16 @@ texture = SubResource("PlaceholderTexture2D_hj3jg")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("2_357tu")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="Background" type="ParallaxBackground" parent="."]
 script = ExtResource("4_yqjao")
 
-[node name="FarStars" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="FarStars" type="ParallaxLayer" parent="Background"]
 motion_scale = Vector2(0.2, 0.2)
-motion_mirroring = Vector2(1920, 1080)
+motion_mirroring = Vector2(4000, 4000)
 
-[node name="Stars" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="Stars" type="ParallaxLayer" parent="Background"]
 motion_scale = Vector2(0.5, 0.5)
-motion_mirroring = Vector2(1920, 1080)
+motion_mirroring = Vector2(4000, 4000)
 
-[node name="CloseStars" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(1920, 1080)
+[node name="CloseStars" type="ParallaxLayer" parent="Background"]
+motion_mirroring = Vector2(4000, 4000)

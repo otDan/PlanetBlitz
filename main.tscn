@@ -1,12 +1,45 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkeg2itkwy8vv"]
+[gd_scene load_steps=9 format=3 uid="uid://bkeg2itkwy8vv"]
 
-[ext_resource type="Shader" path="res://shaders/atmosphere.gdshader" id="1_2dohx"]
 [ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://player.tscn" id="2_80sai"]
+[ext_resource type="Environment" uid="uid://d08mq5h5li88u" path="res://space_envirnonment.tres" id="2_357tu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_axwkx"]
 
+[sub_resource type="Shader" id="Shader_thr37"]
+code = "shader_type canvas_item;
+
+uniform float atmosphere_radius = 0.5;
+uniform sampler2D SCREEN_TEXTURE: hint_screen_texture, filter_linear_mipmap;
+uniform vec4 outer_color: source_color = vec4(0.2, 0.5, 0.8, 1.0);
+uniform vec4 inner_color: source_color = vec4(0.5, 0.8, 1.0, 1.0);
+
+
+void fragment() {
+    vec2 center = vec2(0.5, 0.5);
+    float distance = distance(center, UV);
+
+    // Discard fragments outside of the circular shape
+    if (distance > 0.5) {
+        discard;
+    }
+
+    // Sample the color from the sprite texture
+    vec4 sprite_color = texture(SCREEN_TEXTURE, UV);
+
+    // Calculate the intensity of the atmosphere based on the distance
+    float intensity = smoothstep(atmosphere_radius - 0.01, atmosphere_radius, distance);
+
+    // Calculate the final color by interpolating between outer and inner color based on intensity
+    vec4 final_color = mix(outer_color, inner_color, intensity);
+
+    // Mix the final color with the sprite color
+    final_color.rgb = mix(final_color.rgb, sprite_color.rgb, sprite_color.a);
+
+    COLOR = final_color;
+}"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d7j8w"]
-shader = ExtResource("1_2dohx")
+shader = SubResource("Shader_thr37")
 shader_parameter/atmosphere_radius = 0.486
 shader_parameter/outer_color = Color(0.701961, 0.254902, 0.180392, 1)
 shader_parameter/inner_color = Color(0.858824, 0.772549, 0.901961, 1)
@@ -41,3 +74,6 @@ position = Vector2(-2, -2)
 texture = SubResource("PlaceholderTexture2D_hj3jg")
 
 [node name="Player" parent="." instance=ExtResource("2_80sai")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_357tu")

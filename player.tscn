@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dry3qo3lt13bc"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_wvaby"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ctx3f"]
+radius = 55.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_gequb"]
+size = Vector2(100, 100)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1hjwx"]
+size = Vector2(10, 10)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wlk5p"]
+particle_flag_disable_z = true
+gravity = Vector3(50, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_wvaby")
+rotationSpeed = 2.0
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_ctx3f")
+
+[node name="Planet" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_gequb")
+
+[node name="Thruster" type="Sprite2D" parent="Planet"]
+position = Vector2(-100, 0)
+texture = SubResource("PlaceholderTexture2D_1hjwx")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Planet/Thruster"]
+position = Vector2(6, 0)
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_wlk5p")
+local_coords = true

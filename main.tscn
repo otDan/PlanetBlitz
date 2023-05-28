@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://bkeg2itkwy8vv"]
+
+[ext_resource type="Shader" path="res://shaders/atmosphere.gdshader" id="1_2dohx"]
+[ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://player.tscn" id="2_80sai"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_axwkx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7j8w"]
+shader = ExtResource("1_2dohx")
+shader_parameter/atmosphere_radius = 0.486
+shader_parameter/outer_color = Color(0.701961, 0.254902, 0.180392, 1)
+shader_parameter/inner_color = Color(0.858824, 0.772549, 0.901961, 1)
+
+[sub_resource type="Gradient" id="Gradient_5hsr2"]
+colors = PackedColorArray(0, 0, 0, 1, 0.0431373, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qnfav"]
+gradient = SubResource("Gradient_5hsr2")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hj3jg"]
+
+[node name="Main" type="Node"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_axwkx")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+material = SubResource("ShaderMaterial_d7j8w")
+texture = SubResource("GradientTexture2D_qnfav")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+position = Vector2(-2, -2)
+texture = SubResource("PlaceholderTexture2D_hj3jg")
+
+[node name="Player" parent="." instance=ExtResource("2_80sai")]

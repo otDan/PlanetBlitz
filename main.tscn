@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkeg2itkwy8vv"]
+[gd_scene load_steps=5 format=3 uid="uid://bkeg2itkwy8vv"]
 
+[ext_resource type="Script" path="res://follow_camera.gd" id="1_x6yc0"]
 [ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://player.tscn" id="2_80sai"]
 [ext_resource type="Environment" uid="uid://d08mq5h5li88u" path="res://space_envirnonment.tres" id="2_357tu"]
 
@@ -8,7 +9,9 @@ size = Vector2(100, 100)
 
 [node name="Main" type="Node"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("1_x6yc0")
+target = NodePath("../Player")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(53, -55)

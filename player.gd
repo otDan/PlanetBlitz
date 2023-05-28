@@ -1,18 +1,20 @@
 extends Node2D
 
-var thruster: Sprite2D
 @export var radius: float = 100.0  # Adjust the radius as needed
 @export var targetRotation: float = PI  # Set the target rotation for left side
 @export var rotationSpeed: float = 15.0  # Adjust the rotation speed as needed
 @export var acceleration: float = 150.0  # Adjust the acceleration as needed
 @export var deceleration: float = 2.0  # Adjust the deceleration as needed
 
+var thruster: Sprite2D
 var velocity: Vector2 = Vector2.ZERO
+
 
 func _ready():
 	thruster = $Planet/Thruster
 	thruster.rotation = targetRotation
 	thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + $Planet.position
+
 
 func _process(delta):
 	var inputDirection = Vector2.ZERO

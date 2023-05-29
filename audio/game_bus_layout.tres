@@ -1,4 +1,16 @@
-[gd_resource type="AudioBusLayout" format=3 uid="uid://dywal0dxxl3dj"]
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://dywal0dxxl3dj"]
+
+[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_0jkfk"]
+resource_name = "Distortion"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_wiyem"]
+resource_name = "Reverb"
+room_size = 1.0
+damping = 0.85
+spread = 0.29
+hipass = 0.14
+dry = 0.5
+wet = 0.77
 
 [resource]
 bus/1/name = &"Effects"
@@ -7,9 +19,13 @@ bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = 0.0
 bus/1/send = &"Master"
+bus/1/effect/0/effect = SubResource("AudioEffectDistortion_0jkfk")
+bus/1/effect/0/enabled = true
 bus/2/name = &"Noise"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
 bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectReverb_wiyem")
+bus/2/effect/0/enabled = true

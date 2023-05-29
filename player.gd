@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var radius: float = 100.0  # Adjust the radius as needed
-@export var targetRotation: float = PI  # Set the target rotation for left side
-@export var rotationSpeed: float = 15.0  # Adjust the rotation speed as needed
+@export var target_rotation: float = PI  # Set the target rotation for left side
+@export var rotation_speed: float = 1.0  # Adjust the rotation speed as needed
 @export var acceleration: float = 150.0  # Adjust the acceleration as needed
 @export var deceleration: float = 2.0  # Adjust the deceleration as needed
 
@@ -13,7 +13,7 @@ var velocity: Vector2 = Vector2.ZERO
 
 
 func _ready():
-	thruster.rotation = targetRotation
+	thruster.rotation = target_rotation
 	thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + $Planet.position
 
 
@@ -33,11 +33,11 @@ func _process(delta):
 		inputDirection.x += 1.0
 
 	if inputDirection != Vector2.ZERO:
-		targetRotation = inputDirection.angle() + PI
-		thruster.rotation = lerp_angle(thruster.rotation, targetRotation, rotationSpeed * delta)
+		target_rotation = inputDirection.angle() + PI
+		thruster.rotation = lerp_angle(thruster.rotation, target_rotation, rotation_speed * delta)
 		thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + $Planet.position
-		thruster_audio.play()
-		print(thruster_audio.playing)
+		if not thruster_audio.playing:
+			thruster_audio.play()
 	else:
 		thruster_audio.stop()
 		

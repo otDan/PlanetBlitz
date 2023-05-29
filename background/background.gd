@@ -1,11 +1,14 @@
 extends ParallaxBackground
 
+@export var camera: Camera2D
+
 
 func _ready():
 	var gen_area = Rect2(0, 0, 3000, 3000)
-	generate_stars($FarStars, 650, Vector2(1, 1.25), gen_area)
-	generate_stars($Stars, 220, Vector2(1, 2.55), gen_area)
-	generate_stars($CloseStars, 95, Vector2(1.5, 5), gen_area)
+	generate_stars($FarStars, 700, Vector2(1, 1.25), gen_area)
+	generate_stars($Stars, 390, Vector2(1, 2.55), gen_area)
+	generate_stars($CloseStars, 85, Vector2(1.5, 5), gen_area)
+#	generate_stars($CloseStars, 1, Vector2(10, 15), gen_area)
 
 
 func generate_stars(parallaxLayer: ParallaxLayer, star_count: int, star_size_range: Vector2, spawn_area: Rect2):
@@ -20,15 +23,15 @@ func generate_stars(parallaxLayer: ParallaxLayer, star_count: int, star_size_ran
 		parallaxLayer.add_child(starInstance)
 
 
-func _process(delta):
-	var viewportRect = Rect2(Vector2.ZERO, get_viewport().get_visible_rect().size)
+#func _process(delta):	
+#	var stars = []
+#	stars.append_array($FarStars.get_children())
+#	stars.append_array($Stars.get_children())
+#	stars.append_array($CloseStars.get_children())
 	
-	var stars = []
-	stars.append_array($FarStars.get_children())
-	stars.append_array($Stars.get_children())
-	stars.append_array($CloseStars.get_children())
-	
-	for star in stars:
-		var starPosition = star.global_position
-		if viewportRect.has_point(starPosition):
-			star.queue_redraw()
+#	for star in stars:
+#		var star_distance = camera.global_position.distance_to(star.global_position)
+#		if star_distance < 100:
+#		if star.to_update:
+#			star.queue_redraw()
+#		print("updating: %s" % [str(star_distance)])

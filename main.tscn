@@ -34,9 +34,10 @@ texture = SubResource("PlaceholderTexture2D_hj3jg")
 [node name="Player" parent="." instance=ExtResource("2_80sai")]
 radius = 70.0
 
-[node name="Background" type="ParallaxBackground" parent="."]
+[node name="Background" type="ParallaxBackground" parent="." node_paths=PackedStringArray("camera")]
 follow_viewport_scale = 10.0
 script = ExtResource("4_yqjao")
+camera = NodePath("../Camera2D")
 
 [node name="FarStars" type="ParallaxLayer" parent="Background"]
 z_index = -95

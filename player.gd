@@ -6,18 +6,22 @@ extends Node2D
 @export var acceleration: float = 150.0  # Adjust the acceleration as needed
 @export var deceleration: float = 2.0  # Adjust the deceleration as needed
 
-var thruster: Sprite2D
+@export var thruster: Sprite2D
+@export var thruster_audio: AudioStreamPlayer2D
+
 var velocity: Vector2 = Vector2.ZERO
 
 
 func _ready():
-	thruster = $Planet/Thruster
 	thruster.rotation = targetRotation
 	thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + $Planet.position
 
 
 func _process(delta):
 	var inputDirection = Vector2.ZERO
+
+#	var stickInput = Vector2(Input.get_joy_axis(0, JOY_AXIS_LEFT_X), Input.get_joy_axis(0, JOY_AXIS_LEFT_Y))
+#	inputDirection = stickInput.normalized()
 
 	if Input.is_action_pressed("ui_up"):
 		inputDirection.y -= 1.0
@@ -30,9 +34,13 @@ func _process(delta):
 
 	if inputDirection != Vector2.ZERO:
 		targetRotation = inputDirection.angle() + PI
-
-	thruster.rotation = lerp_angle(thruster.rotation, targetRotation, rotationSpeed * delta)
-	thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + $Planet.position
+		thruster.rotation = lerp_angle(thruster.rotation, targetRotation, rotationSpeed * delta)
+		thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + $Planet.position
+		thruster_audio.play()
+		print(thruster_audio.playing)
+	else:
+		thruster_audio.stop()
+		
 
 	if inputDirection != Vector2.ZERO:
 		var desiredVelocity = (thruster.position - $Planet.position).normalized() * acceleration

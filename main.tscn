@@ -1,12 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkeg2itkwy8vv"]
+[gd_scene load_steps=8 format=3 uid="uid://bkeg2itkwy8vv"]
 
 [ext_resource type="Script" path="res://follow_camera.gd" id="1_x6yc0"]
 [ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://player.tscn" id="2_80sai"]
 [ext_resource type="Environment" uid="uid://d08mq5h5li88u" path="res://space_envirnonment.tres" id="2_357tu"]
 [ext_resource type="Script" path="res://background.gd" id="4_yqjao"]
+[ext_resource type="Script" path="res://debug.gd" id="5_2tc34"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_hj3jg"]
 size = Vector2(100, 100)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_mi7su"]
 
 [node name="Main" type="Node"]
 
@@ -19,9 +22,7 @@ position = Vector2(53, -55)
 texture = SubResource("PlaceholderTexture2D_hj3jg")
 
 [node name="Player" parent="." instance=ExtResource("2_80sai")]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("2_357tu")
+radius = 70.0
 
 [node name="Background" type="ParallaxBackground" parent="."]
 script = ExtResource("4_yqjao")
@@ -36,3 +37,40 @@ motion_mirroring = Vector2(4000, 4000)
 
 [node name="CloseStars" type="ParallaxLayer" parent="Background"]
 motion_mirroring = Vector2(4000, 4000)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_357tu")
+camera_attributes = SubResource("CameraAttributesPractical_mi7su")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Debug" type="Node" parent="CanvasLayer" node_paths=PackedStringArray("fps")]
+script = ExtResource("5_2tc34")
+fps = NodePath("Display/MarginContainer/VBoxContainer/Fps")
+
+[node name="Display" type="Control" parent="CanvasLayer/Debug"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Debug/Display"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Debug/Display/MarginContainer"]
+layout_mode = 2
+
+[node name="Fps" type="Label" parent="CanvasLayer/Debug/Display/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "FPS: %fps%"

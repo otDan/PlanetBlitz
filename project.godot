@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/stretch/aspect="expand"
+window/vsync/vsync_mode=0
 
 [input]
 
@@ -55,4 +56,6 @@ ui_down={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.0392157, 0.0392157, 0.0392157, 1)
+environment/defaults/default_clear_color=Color(0.0705882, 0.0627451, 0.0784314, 1)
+anti_aliasing/quality/msaa_2d=1
+environment/defaults/default_environment="res://space_envirnonment.tres"

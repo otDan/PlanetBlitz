@@ -29,14 +29,14 @@ script = ExtResource("4_yqjao")
 
 [node name="FarStars" type="ParallaxLayer" parent="Background"]
 motion_scale = Vector2(0.2, 0.2)
-motion_mirroring = Vector2(4000, 4000)
+motion_mirroring = Vector2(3000, 3000)
 
 [node name="Stars" type="ParallaxLayer" parent="Background"]
 motion_scale = Vector2(0.5, 0.5)
-motion_mirroring = Vector2(4000, 4000)
+motion_mirroring = Vector2(3000, 3000)
 
 [node name="CloseStars" type="ParallaxLayer" parent="Background"]
-motion_mirroring = Vector2(4000, 4000)
+motion_mirroring = Vector2(3000, 3000)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("2_357tu")

@@ -18,22 +18,10 @@ func _ready():
 
 
 func _process(delta):
-	var inputDirection = Vector2.ZERO
+	var input_direction = InputHandler.input_direction
 
-#	var stickInput = Vector2(Input.get_joy_axis(0, JOY_AXIS_LEFT_X), Input.get_joy_axis(0, JOY_AXIS_LEFT_Y))
-#	inputDirection = stickInput.normalized()
-
-	if Input.is_action_pressed("ui_up"):
-		inputDirection.y -= 1.0
-	elif Input.is_action_pressed("ui_down"):
-		inputDirection.y += 1.0
-	if Input.is_action_pressed("ui_left"):
-		inputDirection.x -= 1.0
-	elif Input.is_action_pressed("ui_right"):
-		inputDirection.x += 1.0
-
-	if inputDirection != Vector2.ZERO:
-		target_rotation = inputDirection.angle() + PI
+	if input_direction != Vector2.ZERO:
+		target_rotation = input_direction.angle() + PI
 		thruster.rotation = lerp_angle(thruster.rotation, target_rotation, rotation_speed * delta)
 		thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + $Planet.position
 		if not thruster_audio.playing:
@@ -42,10 +30,10 @@ func _process(delta):
 		thruster_audio.stop()
 		
 
-	if inputDirection != Vector2.ZERO:
-		var desiredVelocity = (thruster.position - $Planet.position).normalized() * acceleration
-		velocity = velocity.lerp(desiredVelocity, delta)
+	if input_direction != Vector2.ZERO:
+		var desired_velocity = (thruster.position - $Planet.position).normalized() * acceleration
+		velocity = velocity.lerp(desired_velocity, delta)
 	else:
 		velocity = velocity.lerp(Vector2.ZERO, deceleration * delta)
 
-	position -= velocity * delta
+	self.position -= velocity * delta

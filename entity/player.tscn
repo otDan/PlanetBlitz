@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://dry3qo3lt13bc"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_wvaby"]
-[ext_resource type="Texture2D" uid="uid://dwocvptbnldog" path="res://planet.png" id="2_fvpvi"]
-[ext_resource type="AudioStream" uid="uid://bmenkjfdud6j3" path="res://audio/sounds/rocket_engine.mp3" id="3_e63h5"]
+[ext_resource type="Script" path="res://entity/player.gd" id="1_410v0"]
+[ext_resource type="Texture2D" uid="uid://dwocvptbnldog" path="res://entity/planet.png" id="2_uc345"]
+[ext_resource type="AudioStream" uid="uid://bmenkjfdud6j3" path="res://audio/sounds/rocket_engine.mp3" id="3_yhb8s"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ctx3f"]
 radius = 55.0
@@ -13,7 +13,7 @@ size = Vector2(10, 10)
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ersu5"]
 streams_count = 1
 random_pitch = 1.4
-stream_0/stream = ExtResource("3_e63h5")
+stream_0/stream = ExtResource("3_yhb8s")
 stream_0/weight = 1.0
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wlk5p"]
@@ -23,7 +23,7 @@ orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
 
 [node name="Player" type="Node2D" node_paths=PackedStringArray("thruster", "thruster_audio")]
-script = ExtResource("1_wvaby")
+script = ExtResource("1_410v0")
 thruster = NodePath("Planet/Thruster")
 thruster_audio = NodePath("Planet/Thruster/ThrusterEngine")
 
@@ -36,7 +36,7 @@ current = true
 shape = SubResource("CircleShape2D_ctx3f")
 
 [node name="Planet" type="Sprite2D" parent="."]
-texture = ExtResource("2_fvpvi")
+texture = ExtResource("2_uc345")
 
 [node name="Thruster" type="Sprite2D" parent="Planet"]
 position = Vector2(-100, 0)
@@ -49,7 +49,7 @@ pitch_scale = 0.75
 bus = &"Effects"
 
 [node name="ThrusterEngine2" type="AudioStreamPlayer2D" parent="Planet/Thruster"]
-stream = ExtResource("3_e63h5")
+stream = ExtResource("3_yhb8s")
 pitch_scale = 0.75
 bus = &"Effects"
 

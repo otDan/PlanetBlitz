@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://bkeg2itkwy8vv"]
 
 [ext_resource type="Script" path="res://follow_camera.gd" id="1_x6yc0"]
-[ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://player.tscn" id="2_80sai"]
+[ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://entity/player.tscn" id="2_80sai"]
 [ext_resource type="Environment" uid="uid://d08mq5h5li88u" path="res://space_envirnonment.tres" id="2_357tu"]
-[ext_resource type="Script" path="res://background.gd" id="4_yqjao"]
+[ext_resource type="Script" path="res://background/background.gd" id="4_yqjao"]
 [ext_resource type="Script" path="res://debug.gd" id="5_2tc34"]
 [ext_resource type="AudioStream" uid="uid://cp1omq5nfko4c" path="res://audio/sounds/noise/space_background_noise.mp3" id="6_x5a8e"]
 [ext_resource type="AudioStream" uid="uid://trl43xdj7qxw" path="res://audio/sounds/noise/space_background_noise_2.mp3" id="7_c4q7e"]
@@ -23,6 +23,7 @@ stream_1/weight = 1.0
 [node name="Main" type="Node"]
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
+zoom = Vector2(0.75, 0.75)
 script = ExtResource("1_x6yc0")
 target = NodePath("../Player")
 
@@ -57,9 +58,11 @@ camera_attributes = SubResource("CameraAttributesPractical_mi7su")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Debug" type="Node" parent="CanvasLayer" node_paths=PackedStringArray("fps")]
+[node name="Debug" type="Node" parent="CanvasLayer" node_paths=PackedStringArray("player", "fps", "speed")]
 script = ExtResource("5_2tc34")
+player = NodePath("../../Player")
 fps = NodePath("Display/MarginContainer/VBoxContainer/Fps")
+speed = NodePath("Display/MarginContainer/VBoxContainer/Speed")
 
 [node name="Display" type="Control" parent="CanvasLayer/Debug"]
 layout_mode = 3
@@ -87,6 +90,10 @@ layout_mode = 2
 [node name="Fps" type="Label" parent="CanvasLayer/Debug/Display/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "FPS: %fps%"
+
+[node name="Speed" type="Label" parent="CanvasLayer/Debug/Display/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SPEED: %speed%"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_2w7r4")

@@ -44,9 +44,11 @@ size = Vector2(120, 120)
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("target")]
 zoom = Vector2(0.7, 0.7)
 script = ExtResource("1_x6yc0")
+min_zoom = 0.55
 target = NodePath("../Player")
 
 [node name="AdditionalStars" type="GPUParticles2D" parent="Camera2D"]
+visible = false
 amount = 1000
 process_material = SubResource("ParticleProcessMaterial_cjepr")
 lifetime = 10.0
@@ -54,9 +56,12 @@ preprocess = 30.0
 
 [node name="Player" parent="." instance=ExtResource("2_80sai")]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_357tu")
+camera_attributes = SubResource("CameraAttributesPractical_mi7su")
+
 [node name="Background" type="ParallaxBackground" parent="." node_paths=PackedStringArray("camera")]
 follow_viewport_scale = 10.0
-scroll_ignore_camera_zoom = true
 script = ExtResource("4_yqjao")
 camera = NodePath("../Camera2D")
 
@@ -73,10 +78,6 @@ motion_mirroring = Vector2(3000, 3000)
 [node name="CloseStars" type="ParallaxLayer" parent="Background"]
 z_index = -97
 motion_mirroring = Vector2(3000, 3000)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource("2_357tu")
-camera_attributes = SubResource("CameraAttributesPractical_mi7su")
 
 [node name="DebugLayer" type="CanvasLayer" parent="."]
 layer = 99
@@ -129,9 +130,11 @@ text = "Randomize"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_2w7r4")
-volume_db = -10.694
+volume_db = -10.0
 pitch_scale = 0.71
 autoplay = true
+max_polyphony = 2
+bus = &"Noise"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 visible = false

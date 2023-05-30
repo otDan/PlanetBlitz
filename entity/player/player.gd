@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var deceleration: float = 2.0  # Adjust the deceleration as needed
 
 @export var planet: Sprite2D
-@export var thruster: Sprite2D
+@export var thruster: Node2D
 @export var thruster_audio: AudioStreamPlayer2D
 @export var thruster_particles: GPUParticles2D
 @export var thruster_particles_2: GPUParticles2D

@@ -169,6 +169,11 @@ texture = SubResource("NoiseTexture2D_5y45q")
 [node name="Clouds" type="Sprite2D" parent="Planet"]
 texture = SubResource("NoiseTexture2D_vo2pg")
 
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+self_modulate = Color(0.137255, 0.137255, 0.219608, 0.176471)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("2_fmb1y")
+
 [node name="Thruster" type="Sprite2D" parent="."]
 position = Vector2(-135, 0)
 rotation = 3.14159
@@ -196,5 +201,5 @@ texture = ExtResource("4_xvap4")
 
 [node name="PointLight2D" type="PointLight2D" parent="Thruster"]
 rotation = 3.14159
-color = Color(1, 1, 0.490196, 1)
 texture = ExtResource("4_xvap4")
+texture_scale = 2.0

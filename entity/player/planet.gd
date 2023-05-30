@@ -16,4 +16,4 @@ func _process(delta: float):
 
 	# Set the offset in the noise texture
 	noise_texture.noise.offset = noise_offset
-	print(noise_texture.noise.offset)
+#	print(noise_texture.noise.offset)

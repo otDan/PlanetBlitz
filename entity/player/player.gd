@@ -48,4 +48,4 @@ func _process(delta):
 
 
 func _get_radius():
-	return planet.get_rect().size.x / 2 * 1.1
+	return planet.get_rect().size.x / 2 * 1.2

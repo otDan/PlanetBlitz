@@ -11,5 +11,9 @@ func _ready():
 
 
 func _process(delta):
-	fps.text = "FPS: " + str(Engine.get_frames_per_second())
-	speed.text = "SPEED: " + str(roundf(player.velocity.length()))
+	fps.text = "Fps: " + str(Engine.get_frames_per_second())
+	speed.text = "Speed: " + str(roundf(player.velocity.length()))
+
+
+func _on_randomize_button_pressed():
+	player.get_node("Planet")._ready()

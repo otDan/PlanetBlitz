@@ -58,6 +58,11 @@ ui_down={
 ]
 }
 
+[physics]
+
+2d/default_gravity=0.0
+2d/default_gravity_vector=Vector2(0, 0)
+
 [rendering]
 
 environment/defaults/default_clear_color=Color(0.0705882, 0.0627451, 0.0784314, 1)

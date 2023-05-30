@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dry3qo3lt13bc"]
+[gd_scene load_steps=18 format=3 uid="uid://dry3qo3lt13bc"]
 
 [ext_resource type="Script" path="res://entity/player.gd" id="1_410v0"]
 [ext_resource type="Texture2D" uid="uid://dwocvptbnldog" path="res://entity/planet.png" id="2_uc345"]
 [ext_resource type="AudioStream" uid="uid://bmenkjfdud6j3" path="res://audio/sounds/rocket_engine.mp3" id="3_yhb8s"]
+[ext_resource type="Texture2D" uid="uid://duolr8ykh6o67" path="res://entity/particle.png" id="4_byi5e"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ctx3f"]
 radius = 55.0
@@ -13,48 +14,111 @@ size = Vector2(10, 10)
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ersu5"]
 streams_count = 1
 random_pitch = 1.4
+random_volume_offset_db = 0.0
 stream_0/stream = ExtResource("3_yhb8s")
 stream_0/weight = 1.0
+
+[sub_resource type="Gradient" id="Gradient_ojetx"]
+offsets = PackedFloat32Array(0, 0.305164, 0.553991, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.890196, 0.823529, 0.0980392, 0.235294, 0.8, 0.305882, 0.168627, 0.490196, 0.662745, 0, 0.0823529, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_n6jiw"]
+gradient = SubResource("Gradient_ojetx")
+
+[sub_resource type="Curve" id="Curve_4ogi1"]
+_data = [Vector2(0.00409836, 0.618182), 0.0, 0.0, 0, 0, Vector2(0.282787, 0.890909), 1.41157, 1.41157, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_hpxkj"]
+curve = SubResource("Curve_4ogi1")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wlk5p"]
 particle_flag_disable_z = true
 gravity = Vector3(50, 0, 0)
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
+scale_min = 0.0
+scale_max = 0.05
+scale_curve = SubResource("CurveTexture_hpxkj")
+color_ramp = SubResource("GradientTexture1D_n6jiw")
 
-[node name="Player" type="Node2D" node_paths=PackedStringArray("thruster", "thruster_audio")]
+[sub_resource type="Gradient" id="Gradient_3mr25"]
+offsets = PackedFloat32Array(0, 0.553991, 1)
+colors = PackedColorArray(0.890196, 0.823529, 0.0980392, 0.235294, 0.8, 0.305882, 0.168627, 0.490196, 0.662745, 0, 0.0823529, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6f0nh"]
+gradient = SubResource("Gradient_3mr25")
+
+[sub_resource type="Curve" id="Curve_3bfqu"]
+_data = [Vector2(0, 0.354545), 0.0, 0.0, 0, 0, Vector2(0.360656, 0.509091), 1.41157, 1.41157, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_frkcl"]
+curve = SubResource("Curve_3bfqu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5370e"]
+emission_shape = 1
+emission_sphere_radius = 2.0
+particle_flag_disable_z = true
+spread = 145.0
+gravity = Vector3(50, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+scale_min = 0.0
+scale_max = 0.05
+scale_curve = SubResource("CurveTexture_frkcl")
+color_ramp = SubResource("GradientTexture1D_6f0nh")
+turbulence_enabled = true
+turbulence_noise_scale = 4.24
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("planet", "thruster", "thruster_audio", "thruster_particles", "thruster_particles_2")]
+motion_mode = 1
 script = ExtResource("1_410v0")
-thruster = NodePath("Planet/Thruster")
-thruster_audio = NodePath("Planet/Thruster/ThrusterEngine")
+deceleration = 1.0
+planet = NodePath("Planet")
+thruster = NodePath("Thruster")
+thruster_audio = NodePath("Thruster/ThrusterEngine")
+thruster_particles = NodePath("Thruster/ThrusterParticles")
+thruster_particles_2 = NodePath("Thruster/ThrusterParticles2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ctx3f")
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-shape = SubResource("CircleShape2D_ctx3f")
-
 [node name="Planet" type="Sprite2D" parent="."]
 texture = ExtResource("2_uc345")
 
-[node name="Thruster" type="Sprite2D" parent="Planet"]
+[node name="Thruster" type="Sprite2D" parent="."]
 position = Vector2(-100, 0)
+rotation = 3.14159
 texture = SubResource("PlaceholderTexture2D_1hjwx")
 
-[node name="ThrusterEngine" type="AudioStreamPlayer2D" parent="Planet/Thruster"]
+[node name="ThrusterEngine" type="AudioStreamPlayer2D" parent="Thruster"]
 position = Vector2(-10, 0)
 stream = SubResource("AudioStreamRandomizer_ersu5")
+volume_db = -10.0
 pitch_scale = 0.75
-bus = &"Effects"
 
-[node name="ThrusterEngine2" type="AudioStreamPlayer2D" parent="Planet/Thruster"]
-stream = ExtResource("3_yhb8s")
-pitch_scale = 0.75
-bus = &"Effects"
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Planet/Thruster"]
-position = Vector2(6, 0)
-amount = 25
+[node name="ThrusterParticles" type="GPUParticles2D" parent="Thruster"]
+position = Vector2(10, 0)
+amount = 75
 process_material = SubResource("ParticleProcessMaterial_wlk5p")
+texture = ExtResource("4_byi5e")
 local_coords = true
+
+[node name="ThrusterParticles2" type="GPUParticles2D" parent="Thruster"]
+position = Vector2(15, 0)
+emitting = false
+amount = 75
+process_material = SubResource("ParticleProcessMaterial_5370e")
+texture = ExtResource("4_byi5e")
+
+[node name="PointLight2D" type="PointLight2D" parent="Thruster"]
+rotation = 3.14159
+color = Color(1, 1, 0.490196, 1)
+energy = 2.4
+texture = ExtResource("4_byi5e")

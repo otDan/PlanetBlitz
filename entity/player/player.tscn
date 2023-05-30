@@ -1,12 +1,68 @@
-[gd_scene load_steps=18 format=3 uid="uid://dry3qo3lt13bc"]
+[gd_scene load_steps=30 format=3 uid="uid://dry3qo3lt13bc"]
 
-[ext_resource type="Script" path="res://entity/player.gd" id="1_410v0"]
-[ext_resource type="Texture2D" uid="uid://dwocvptbnldog" path="res://entity/planet.png" id="2_uc345"]
-[ext_resource type="AudioStream" uid="uid://bmenkjfdud6j3" path="res://audio/sounds/rocket_engine.mp3" id="3_yhb8s"]
-[ext_resource type="Texture2D" uid="uid://duolr8ykh6o67" path="res://entity/particle.png" id="4_byi5e"]
+[ext_resource type="Script" path="res://entity/player/player.gd" id="1_cf7dl"]
+[ext_resource type="Texture2D" uid="uid://dwocvptbnldog" path="res://entity/player/planet.png" id="2_fmb1y"]
+[ext_resource type="AudioStream" uid="uid://bmenkjfdud6j3" path="res://audio/sounds/rocket_engine.mp3" id="3_2ihxb"]
+[ext_resource type="Script" path="res://entity/player/planet.gd" id="3_e4lak"]
+[ext_resource type="Texture2D" uid="uid://duolr8ykh6o67" path="res://entity/particle.png" id="4_xvap4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ctx3f"]
-radius = 55.0
+radius = 150.0
+
+[sub_resource type="Gradient" id="Gradient_tw3b8"]
+offsets = PackedFloat32Array(0, 0.297959, 0.404082, 0.538776, 0.653061, 0.75102, 0.902041, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.102481, 0.569739, 0.650905, 0.57708, 0.0411548, 0.458642, 0.331745, 0.669492, 0.2156, 0.55, 0.022, 0.701961, 0.240602, 0.308336, 0.146443, 0.792835, 0.24, 0.1764, 0.1128, 1, 0.108521, 0.0730426, 0.0375462, 1, 0.54, 0.54, 0.54, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xwsjs"]
+seed = 200
+fractal_type = 3
+fractal_lacunarity = 2.03
+fractal_weighted_strength = 0.45
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5hrol"]
+width = 250
+height = 250
+as_normal_map = true
+normalize = false
+color_ramp = SubResource("Gradient_tw3b8")
+noise = SubResource("FastNoiseLite_xwsjs")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_0vyyd"]
+normal_texture = SubResource("NoiseTexture2D_5hrol")
+
+[sub_resource type="Gradient" id="Gradient_yavge"]
+offsets = PackedFloat32Array(0, 0.518367, 0.865306)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0.462745, 0.623529, 1, 5.05373e-07, 0.21493, 0.298756, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_avtbe"]
+seed = 36
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r1vl2"]
+width = 250
+height = 250
+color_ramp = SubResource("Gradient_yavge")
+noise = SubResource("FastNoiseLite_avtbe")
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5y45q"]
+width = 250
+height = 250
+normalize = false
+color_ramp = SubResource("Gradient_tw3b8")
+noise = SubResource("FastNoiseLite_xwsjs")
+
+[sub_resource type="Gradient" id="Gradient_u0rx1"]
+offsets = PackedFloat32Array(0, 0.510204, 0.8)
+colors = PackedColorArray(0, 0, 0, 0, 0.501961, 0.501961, 0.501961, 0.388235, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_btkxl"]
+seed = 26
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vo2pg"]
+width = 250
+height = 250
+color_ramp = SubResource("Gradient_u0rx1")
+noise = SubResource("FastNoiseLite_btkxl")
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_1hjwx"]
 size = Vector2(10, 10)
@@ -15,7 +71,7 @@ size = Vector2(10, 10)
 streams_count = 1
 random_pitch = 1.4
 random_volume_offset_db = 0.0
-stream_0/stream = ExtResource("3_yhb8s")
+stream_0/stream = ExtResource("3_2ihxb")
 stream_0/weight = 1.0
 
 [sub_resource type="Gradient" id="Gradient_ojetx"]
@@ -75,7 +131,7 @@ turbulence_noise_scale = 4.24
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("planet", "thruster", "thruster_audio", "thruster_particles", "thruster_particles_2")]
 motion_mode = 1
-script = ExtResource("1_410v0")
+script = ExtResource("1_cf7dl")
 deceleration = 1.0
 planet = NodePath("Planet")
 thruster = NodePath("Thruster")
@@ -89,11 +145,32 @@ shape = SubResource("CircleShape2D_ctx3f")
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.137255, 0.137255, 0.219608, 0.227451)
+scale = Vector2(1.05, 1.05)
+texture = ExtResource("2_fmb1y")
+
 [node name="Planet" type="Sprite2D" parent="."]
-texture = ExtResource("2_uc345")
+self_modulate = Color(0.129412, 0.588235, 0.184314, 1)
+clip_children = 2
+texture = ExtResource("2_fmb1y")
+region_filter_clip_enabled = true
+script = ExtResource("3_e4lak")
+
+[node name="Normal" type="Sprite2D" parent="Planet"]
+texture = SubResource("CanvasTexture_0vyyd")
+
+[node name="Water" type="Sprite2D" parent="Planet"]
+texture = SubResource("NoiseTexture2D_r1vl2")
+
+[node name="Mountains" type="Sprite2D" parent="Planet"]
+texture = SubResource("NoiseTexture2D_5y45q")
+
+[node name="Clouds" type="Sprite2D" parent="Planet"]
+texture = SubResource("NoiseTexture2D_vo2pg")
 
 [node name="Thruster" type="Sprite2D" parent="."]
-position = Vector2(-100, 0)
+position = Vector2(-135, 0)
 rotation = 3.14159
 texture = SubResource("PlaceholderTexture2D_1hjwx")
 
@@ -107,7 +184,7 @@ pitch_scale = 0.75
 position = Vector2(10, 0)
 amount = 75
 process_material = SubResource("ParticleProcessMaterial_wlk5p")
-texture = ExtResource("4_byi5e")
+texture = ExtResource("4_xvap4")
 local_coords = true
 
 [node name="ThrusterParticles2" type="GPUParticles2D" parent="Thruster"]
@@ -115,10 +192,9 @@ position = Vector2(15, 0)
 emitting = false
 amount = 75
 process_material = SubResource("ParticleProcessMaterial_5370e")
-texture = ExtResource("4_byi5e")
+texture = ExtResource("4_xvap4")
 
 [node name="PointLight2D" type="PointLight2D" parent="Thruster"]
 rotation = 3.14159
 color = Color(1, 1, 0.490196, 1)
-energy = 2.4
-texture = ExtResource("4_byi5e")
+texture = ExtResource("4_xvap4")

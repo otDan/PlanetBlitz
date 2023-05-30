@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-#@export var radius: float = 100.0  # Adjust the radius as needed
 @export var target_rotation: float = PI  # Set the target rotation for left side
 @export var rotation_speed: float = 1.0  # Adjust the rotation speed as needed
 @export var acceleration: float = 150.0  # Adjust the acceleration as needed
@@ -49,4 +48,4 @@ func _process(delta):
 
 
 func _get_radius():
-	return planet.get_rect().size.x - 20
+	return planet.get_rect().size.x / 2 * 1.1

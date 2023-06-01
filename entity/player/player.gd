@@ -31,11 +31,11 @@ func _process(delta):
 		thruster_particles.emitting = true
 		thruster_particles_2.emitting = true
 		if not thruster_audio.playing:
-			thruster_audio.play()
+			AudioHandler.fade_in(thruster_audio, -10)
 	else:
 		thruster_particles.emitting = false
 		thruster_particles_2.emitting = false
-		thruster_audio.stop()
+		AudioHandler.fade_out(thruster_audio)
 		
 
 	if input_direction != Vector2.ZERO:

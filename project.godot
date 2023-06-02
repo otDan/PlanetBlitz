@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.0", "Forward Plus")
 boot_splash/bg_color=Color(0.137255, 0.137255, 0.137255, 1)
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://audio/game_bus_layout.tres"
+
 [autoload]
 
 AudioHandler="*res://singleton/audio_handler.gd"
@@ -75,6 +79,11 @@ ui_debug={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194333,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_4="bullets"
 
 [physics]
 

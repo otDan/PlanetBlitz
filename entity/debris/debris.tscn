@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctji66clv30c1"]
+
+[ext_resource type="Script" path="res://entity/debris/debris.gd" id="1_ueq7c"]
+[ext_resource type="Texture2D" uid="uid://b326wdn6ccw38" path="res://entity/debris/debris_asteroid_1.png" id="1_ydubx"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xift8"]
+radius = 20.0
+
+[node name="Debris" type="StaticBody2D" node_paths=PackedStringArray("sprite")]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_ueq7c")
+sprite = NodePath("DebrisSprite")
+
+[node name="DebrisSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("1_ydubx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xift8")

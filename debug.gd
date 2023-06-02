@@ -4,9 +4,12 @@ extends Node
 
 @export var fps: Label
 @export var memory: Label
+@export var nodes: Label
 
 @export var position: Label
 @export var speed: Label
+
+@export var debris: PackedScene
 
 var debug_visible = true
 var spawn_area = Vector2(800, 600)
@@ -19,6 +22,7 @@ func _process(delta):
 		
 	fps.text = "Fps: " + str(Engine.get_frames_per_second())
 	memory.text = "Memory: " + str(Performance.get_monitor(Performance.MEMORY_STATIC))
+	nodes.text = "Nodes: " + str(Performance.get_monitor(Performance.OBJECT_NODE_COUNT))
 	
 	position.text = "Position: " + str(round(player.global_position))
 	speed.text = "Speed: " + str(roundf(player.velocity.length()))
@@ -30,7 +34,6 @@ func _on_randomize_pressed():
 	
 func _on_drebis_pressed():
 	var randomPosition = Vector2(randf_range(0, spawn_area.x), randf_range(0, spawn_area.y))
-	var new = Sprite2D.new()
-	new.texture = PlaceholderTexture2D.new()
+	var new = debris.instantiate()
 	new.position = randomPosition
 	player.get_node("DebrisHolder").add_child(new)

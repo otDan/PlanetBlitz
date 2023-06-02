@@ -8,12 +8,14 @@ extends Node
 @export var position: Label
 @export var speed: Label
 
-
-func _ready():
-	pass
+var debug_visible = true
 
 
 func _process(delta):
+	if Input.is_action_just_pressed("ui_debug"):
+		debug_visible = !debug_visible
+		get_child(0).visible = debug_visible
+		
 	fps.text = "Fps: " + str(Engine.get_frames_per_second())
 	memory.text = "Memory: " + str(Performance.get_monitor(Performance.MEMORY_STATIC))
 	

@@ -1,6 +1,6 @@
 extends Node
 
-@export var player: Node2D
+@export var player: Player
 
 @export var fps: Label
 @export var memory: Label
@@ -33,7 +33,13 @@ func _on_randomize_pressed():
 
 	
 func _on_drebis_pressed():
-	var randomPosition = Vector2(randf_range(0, spawn_area.x), randf_range(0, spawn_area.y))
-	var new = debris.instantiate()
-	new.position = randomPosition
-	player.get_node("DebrisHolder").add_child(new)
+	var random_position = Vector2(randf_range(0, spawn_area.x), randf_range(0, spawn_area.y))
+	var new_debris = debris.instantiate()
+	new_debris.position = random_position
+	player.get_node("DebrisHolder").add_child(new_debris)
+
+
+func _on_add_level_point_pressed():
+	var new_level_point = Sprite2D.new()
+	new_level_point.texture = PlaceholderTexture2D.new()
+	player.get_node("PointHolder/Level").add_child(new_level_point)

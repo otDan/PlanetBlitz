@@ -231,4 +231,4 @@ texture = ExtResource("2_fmb1y")
 
 [node name="DebrisHolder" type="Node2D" parent="."]
 script = ExtResource("7_oxtvt")
-speed = 100000.0
+speed = 1.0

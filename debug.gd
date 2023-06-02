@@ -9,6 +9,7 @@ extends Node
 @export var speed: Label
 
 var debug_visible = true
+var spawn_area = Vector2(800, 600)
 
 
 func _process(delta):
@@ -23,5 +24,13 @@ func _process(delta):
 	speed.text = "Speed: " + str(roundf(player.velocity.length()))
 
 
-func _on_randomize_button_pressed():
+func _on_randomize_pressed():
 	player.get_node("Planet/Planet")._ready()
+
+	
+func _on_drebis_pressed():
+	var randomPosition = Vector2(randf_range(0, spawn_area.x), randf_range(0, spawn_area.y))
+	var new = Sprite2D.new()
+	new.texture = PlaceholderTexture2D.new()
+	new.position = randomPosition
+	player.get_node("DebrisHolder").add_child(new)

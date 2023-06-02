@@ -138,9 +138,16 @@ layout_mode = 2
 size_flags_vertical = 8
 alignment = 1
 
-[node name="Randomize" type="Button" parent="DebugLayer/Debug/Display/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugLayer/Debug/Display/MarginContainer/HBoxContainer"]
 layout_mode = 2
-text = "Randomize"
+
+[node name="Randomize" type="Button" parent="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Randomize Planet"
+
+[node name="Drebis" type="Button" parent="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Spawn Debris"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_2w7r4")
@@ -151,4 +158,5 @@ max_polyphony = 2
 
 [node name="Player" parent="." instance=ExtResource("2_3ipt0")]
 
-[connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/Randomize" to="DebugLayer/Debug" method="_on_randomize_button_pressed" flags=18]
+[connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Randomize" to="DebugLayer/Debug" method="_on_randomize_pressed"]
+[connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Drebis" to="DebugLayer/Debug" method="_on_drebis_pressed"]

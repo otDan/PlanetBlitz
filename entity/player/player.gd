@@ -10,6 +10,7 @@ extends CharacterBody2D
 @export var thruster_audio: AudioStreamPlayer2D
 @export var thruster_particles: GPUParticles2D
 @export var thruster_particles_2: GPUParticles2D
+@export var level_points: Node2D
 
 var radius: float = 100.0 :
 	get: return _get_radius()
@@ -19,6 +20,7 @@ var computed_velocity: Vector2 = Vector2.ZERO
 func _ready():
 	thruster.rotation = target_rotation
 	thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + planet.position
+	level_points.position = Vector2(radius, 0).rotated(thruster.rotation + PI) + planet.position
 
 
 func _process(delta):
@@ -26,8 +28,12 @@ func _process(delta):
 
 	if input_direction != Vector2.ZERO:
 		target_rotation = input_direction.angle() + PI
-		thruster.rotation = lerp_angle(thruster.rotation, target_rotation, rotation_speed * delta)
+		
 		thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + planet.position
+		thruster.rotation = lerp_angle(thruster.rotation, target_rotation, rotation_speed * delta)
+		
+		level_points.position = Vector2(radius, 0).rotated(thruster.rotation + PI) + planet.position
+		
 		thruster_particles.emitting = true
 		thruster_particles_2.emitting = true
 		if not thruster_audio.playing:
@@ -37,6 +43,8 @@ func _process(delta):
 		thruster_particles_2.emitting = false
 		AudioHandler.fade_out(thruster_audio)
 		
+	var opposite_rotation = thruster.rotation - PI
+	level_points.rotation = opposite_rotation
 
 	if input_direction != Vector2.ZERO:
 		var desired_velocity = -(thruster.position - planet.position).normalized() * acceleration

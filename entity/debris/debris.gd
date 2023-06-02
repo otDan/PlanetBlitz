@@ -7,6 +7,7 @@ var rotationSpeed = randf_range(-10, 10)
 
 
 func _ready():
+	self.scale = self.scale * randf_range(0.8, 1.2)
 	sprite.rotation = randf_range(0, 360)
 
 

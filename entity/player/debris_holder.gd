@@ -28,6 +28,6 @@ func _process(delta: float):
 
 		# Calculate the previous position based on the current time
 		var previous_pos = Vector2(radius * cos(angle - current_time), radius * sin(angle - current_time))
-
+		
 		# Interpolate the sprite's position towards the previous position
 		scrap.position = scrap.position.lerp(previous_pos, delta * speed)

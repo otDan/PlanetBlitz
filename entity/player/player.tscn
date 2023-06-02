@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dry3qo3lt13bc"]
+[gd_scene load_steps=30 format=3 uid="uid://dry3qo3lt13bc"]
 
 [ext_resource type="Script" path="res://entity/player/player.gd" id="1_cf7dl"]
 [ext_resource type="Texture2D" uid="uid://dwocvptbnldog" path="res://entity/player/planet.png" id="2_fmb1y"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cax7jaqu7wpi3" path="res://entity/player/thruster.png" id="4_2vimk"]
 [ext_resource type="Texture2D" uid="uid://duolr8ykh6o67" path="res://entity/particle.png" id="4_xvap4"]
 [ext_resource type="AudioStream" uid="uid://bmenkjfdud6j3" path="res://audio/sounds/rocket_engine.mp3" id="6_kvf8v"]
+[ext_resource type="Script" path="res://entity/player/debris_holder.gd" id="7_oxtvt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ctx3f"]
 radius = 125.0
@@ -220,3 +221,14 @@ texture_over = ExtResource("4_xvap4")
 texture_progress = ExtResource("2_fmb1y")
 tint_over = Color(0.843137, 1, 1, 0.498039)
 tint_progress = Color(0.341176, 0.823529, 1, 1)
+
+[node name="LevelupPoints" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="LevelupPoints"]
+position = Vector2(0, 150)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("2_fmb1y")
+
+[node name="DebrisHolder" type="Node2D" parent="."]
+script = ExtResource("7_oxtvt")
+speed = 100000.0

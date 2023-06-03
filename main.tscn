@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bkeg2itkwy8vv"]
+[gd_scene load_steps=14 format=3 uid="uid://bkeg2itkwy8vv"]
 
 [ext_resource type="Script" path="res://follow_camera.gd" id="1_x6yc0"]
 [ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://entity/player/player.tscn" id="2_3ipt0"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://cp1omq5nfko4c" path="res://audio/sounds/noise/space_background_noise.mp3" id="6_x5a8e"]
 [ext_resource type="AudioStream" uid="uid://trl43xdj7qxw" path="res://audio/sounds/noise/space_background_noise_2.mp3" id="7_c4q7e"]
 [ext_resource type="Script" path="res://border.gd" id="9_toveo"]
+[ext_resource type="PackedScene" uid="uid://8buu23xnfxtx" path="res://ui/hud/hud.tscn" id="10_2r5ng"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ihvxo"]
 
@@ -49,7 +50,6 @@ max_zoom = 0.75
 target = NodePath("../Player")
 
 [node name="AdditionalStars" type="GPUParticles2D" parent="Camera2D"]
-visible = false
 amount = 1000
 process_material = SubResource("ParticleProcessMaterial_cjepr")
 lifetime = 10.0
@@ -91,6 +91,7 @@ speed = NodePath("Display/MarginContainer/HBoxContainer2/VBoxContainer2/Speed")
 debris = ExtResource("6_kaocn")
 
 [node name="Display" type="Control" parent="DebugLayer/Debug"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -158,6 +159,10 @@ text = "Randomize Planet"
 layout_mode = 2
 text = "Spawn Debris"
 
+[node name="AddLevelPoint" type="Button" parent="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Add Level Point"
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamRandomizer_2w7r4")
 volume_db = -10.0
@@ -167,5 +172,10 @@ max_polyphony = 2
 
 [node name="Player" parent="." instance=ExtResource("2_3ipt0")]
 
+[node name="HudLayer" type="CanvasLayer" parent="."]
+
+[node name="Hud" parent="HudLayer" instance=ExtResource("10_2r5ng")]
+
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Randomize" to="DebugLayer/Debug" method="_on_randomize_pressed"]
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Drebis" to="DebugLayer/Debug" method="_on_drebis_pressed"]
+[connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/AddLevelPoint" to="DebugLayer/Debug" method="_on_add_level_point_pressed"]

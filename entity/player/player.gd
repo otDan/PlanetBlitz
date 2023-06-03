@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @export var target_rotation: float = PI  # Set the target rotation for left side
 @export var rotation_speed: float = 1.0  # Adjust the rotation speed as needed
@@ -32,7 +33,7 @@ func _process(delta):
 		thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + planet.position
 		thruster.rotation = lerp_angle(thruster.rotation, target_rotation, rotation_speed * delta)
 		
-		level_points.position = Vector2(radius, 0).rotated(thruster.rotation + PI) + planet.position
+		level_points.position = Vector2(radius + 10, 0).rotated(thruster.rotation + PI) + planet.position
 		
 		thruster_particles.emitting = true
 		thruster_particles_2.emitting = true

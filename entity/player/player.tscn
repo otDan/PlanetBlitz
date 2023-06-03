@@ -1,9 +1,10 @@
-[gd_scene load_steps=31 format=3 uid="uid://dry3qo3lt13bc"]
+[gd_scene load_steps=32 format=3 uid="uid://dry3qo3lt13bc"]
 
 [ext_resource type="Script" path="res://entity/player/player.gd" id="1_cf7dl"]
 [ext_resource type="Texture2D" uid="uid://dwocvptbnldog" path="res://entity/player/planet.png" id="2_fmb1y"]
 [ext_resource type="Script" path="res://entity/player/planet.gd" id="3_e4lak"]
 [ext_resource type="Texture2D" uid="uid://cax7jaqu7wpi3" path="res://entity/player/thruster.png" id="4_2vimk"]
+[ext_resource type="Script" path="res://entity/player/weapon_holder.gd" id="4_is4a8"]
 [ext_resource type="Texture2D" uid="uid://duolr8ykh6o67" path="res://entity/particle.png" id="4_xvap4"]
 [ext_resource type="AudioStream" uid="uid://bmenkjfdud6j3" path="res://audio/sounds/rocket_engine.mp3" id="6_kvf8v"]
 [ext_resource type="Script" path="res://entity/player/level_points.gd" id="7_mko50"]
@@ -139,6 +140,23 @@ shape = SubResource("CircleShape2D_ctx3f")
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
 
+[node name="PointHolder" type="Node2D" parent="."]
+position = Vector2(200, 0)
+rotation = 1.5708
+scale = Vector2(0.75, 0.75)
+
+[node name="Level" type="Node2D" parent="PointHolder"]
+rotation = 1.5708
+script = ExtResource("7_mko50")
+distance_between_nodes = 15.0
+
+[node name="DebrisHolder" type="Node2D" parent="."]
+script = ExtResource("7_oxtvt")
+speed = 1.0
+
+[node name="WeaponHolder" type="Node2D" parent="."]
+script = ExtResource("4_is4a8")
+
 [node name="Planet" type="Node2D" parent="."]
 
 [node name="Outline" type="Sprite2D" parent="Planet"]
@@ -223,17 +241,3 @@ texture_over = ExtResource("4_xvap4")
 texture_progress = ExtResource("2_fmb1y")
 tint_over = Color(0.843137, 1, 1, 0.498039)
 tint_progress = Color(0.341176, 0.823529, 1, 1)
-
-[node name="PointHolder" type="Node2D" parent="."]
-position = Vector2(200, 0)
-rotation = 1.5708
-scale = Vector2(0.75, 0.75)
-
-[node name="Level" type="Node2D" parent="PointHolder"]
-rotation = 1.5708
-script = ExtResource("7_mko50")
-distance_between_nodes = 15.0
-
-[node name="DebrisHolder" type="Node2D" parent="."]
-script = ExtResource("7_oxtvt")
-speed = 1.0

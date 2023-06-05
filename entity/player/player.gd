@@ -13,6 +13,8 @@ class_name Player
 @export var thruster_particles_2: GPUParticles2D
 @export var level_points: Node2D
 
+@export var controllable = false
+
 var radius: float = 100.0 :
 	get: return _get_radius()
 var computed_velocity: Vector2 = Vector2.ZERO
@@ -25,6 +27,11 @@ func _ready():
 
 
 func _process(delta):
+	if not controllable:
+		thruster_particles.emitting = false
+		thruster_particles_2.emitting = false
+		return
+		
 	var input_direction = InputHandler.input_direction
 
 	if input_direction != Vector2.ZERO:

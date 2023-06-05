@@ -1,12 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://exlqa524agd"]
+[gd_scene load_steps=7 format=3 uid="uid://exlqa524agd"]
 
 [ext_resource type="Texture2D" uid="uid://k70ukbu13u6w" path="res://ui/hud/level/level_bar_outline.png" id="1_35ji5"]
 [ext_resource type="Texture2D" uid="uid://3duhymqycd8i" path="res://ui/hud/level/level_bar.png" id="2_rp4dh"]
 [ext_resource type="Texture2D" uid="uid://duolr8ykh6o67" path="res://entity/particle.png" id="3_ed38n"]
 
+[sub_resource type="Gradient" id="Gradient_badyk"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2c42c"]
+gradient = SubResource("Gradient_badyk")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.1, 0.5)
+repeat = 2
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lkifg"]
 emission_shape = 3
-emission_box_extents = Vector3(1920, 100, 0)
+emission_box_extents = Vector3(1000, 10, 10)
 particle_flag_disable_z = true
 spread = 180.0
 gravity = Vector3(0, 0, 0)
@@ -45,13 +54,23 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 
-[node name="TextureRect" type="TextureRect" parent="Scaling"]
+[node name="ProgressBarContainer" type="TextureRect" parent="Scaling"]
+clip_children = 1
 layout_mode = 2
 offset_left = -800.0
 offset_top = -75.0
 offset_right = 800.0
 offset_bottom = 75.0
 texture = ExtResource("1_35ji5")
+
+[node name="TextureRect" type="TextureRect" parent="Scaling/ProgressBarContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_2c42c")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="Scaling"]
 clip_children = 2
@@ -65,7 +84,17 @@ value = 100.0
 fill_mode = 6
 texture_progress = ExtResource("2_rp4dh")
 
-[node name="ParticleAddition" type="GPUParticles2D" parent="Scaling/TextureProgressBar"]
+[node name="CenterContainer" type="CenterContainer" parent="Scaling/TextureProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ParticleAddition" type="GPUParticles2D" parent="Scaling/TextureProgressBar/CenterContainer"]
 amount = 1000
 process_material = SubResource("ParticleProcessMaterial_lkifg")
 texture = ExtResource("3_ed38n")
@@ -73,3 +102,19 @@ lifetime = 30.0
 preprocess = 30.0
 speed_scale = 2.0
 local_coords = true
+
+[node name="LevelLabel" type="Label" parent="Scaling"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -18.5
+offset_top = -133.5
+offset_right = 18.5
+offset_bottom = -40.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 65
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1

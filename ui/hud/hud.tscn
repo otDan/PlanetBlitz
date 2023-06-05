@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://8buu23xnfxtx"]
+[gd_scene load_steps=4 format=3 uid="uid://8buu23xnfxtx"]
 
+[ext_resource type="Theme" uid="uid://4jfbuh74ci0i" path="res://theme/base_theme.tres" id="1_4kkm5"]
 [ext_resource type="PackedScene" uid="uid://exlqa524agd" path="res://ui/hud/level/level_bar.tscn" id="1_csm2t"]
+[ext_resource type="Texture2D" uid="uid://ddjp4lhdscd4v" path="res://ui/hud/shop/shop.png" id="2_hv717"]
 
 [node name="Hud" type="Control"]
 layout_mode = 3
@@ -9,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_4kkm5")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -17,10 +20,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -33,3 +36,24 @@ alignment = 1
 
 [node name="LevelBar" parent="MarginContainer/HBoxContainer/VBoxContainer" instance=ExtResource("1_csm2t")]
 layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_hv717")
+region_rect = Rect2(583, 846, 754, 73)
+
+[node name="Shop" type="Control" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Shop"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_hv717")
+expand_mode = 3
+stretch_mode = 5

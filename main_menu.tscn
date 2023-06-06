@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dx0665xaf2c0v"]
+[gd_scene load_steps=5 format=3 uid="uid://dx0665xaf2c0v"]
 
 [ext_resource type="Theme" uid="uid://4jfbuh74ci0i" path="res://theme/base_theme.tres" id="1_8n85t"]
 [ext_resource type="Texture2D" uid="uid://d1fal2stg2ogd" path="res://ui/social/discord.png" id="2_t4ktn"]
+[ext_resource type="Script" path="res://ui/button/sound_button.gd" id="3_t2qwd"]
+[ext_resource type="AudioStream" uid="uid://byg3fp4k1l35i" path="res://audio/ui/button/hover.mp3" id="4_gt306"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -34,6 +36,9 @@ layout_mode = 2
 texture_normal = ExtResource("2_t4ktn")
 ignore_texture_size = true
 stretch_mode = 5
+script = ExtResource("3_t2qwd")
+focus_entered_sound = ExtResource("4_gt306")
+pressed_sound = ExtResource("4_gt306")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -52,6 +57,9 @@ custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Play"
+script = ExtResource("3_t2qwd")
+focus_entered_sound = ExtResource("4_gt306")
+pressed_sound = ExtResource("4_gt306")
 
 [node name="Options" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
@@ -59,9 +67,15 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Options
 "
+script = ExtResource("3_t2qwd")
+focus_entered_sound = ExtResource("4_gt306")
+pressed_sound = ExtResource("4_gt306")
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 35
 text = "Quit"
+script = ExtResource("3_t2qwd")
+focus_entered_sound = ExtResource("4_gt306")
+pressed_sound = ExtResource("4_gt306")

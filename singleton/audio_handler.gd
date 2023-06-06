@@ -1,5 +1,18 @@
 extends Node
 
+var audio_player
+
+
+func _init():
+	audio_player = AudioStreamPlayer.new()
+	add_child(audio_player)
+	
+
+func play_sound(audio: AudioStream, pitch_variation: float = 0.0):
+	audio_player.stream = audio
+	audio_player.pitch_scale = 1.0 + randf_range(-pitch_variation, pitch_variation)
+	audio_player.play()
+
 
 func fade_in(stream_player: AudioStreamPlayer2D, volume):
 	stream_player.play()

@@ -16,3 +16,8 @@ func _on_quit_pressed():
 func _on_play_pressed():
 	animation_player.play("play")
 	pass # Replace with function body.
+
+
+func _on_discord_pressed():
+	OS.shell_open("https://discord.gg/cE955uZ34z")
+	pass # Replace with function body.

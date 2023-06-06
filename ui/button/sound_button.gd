@@ -1,8 +1,8 @@
 class_name SoundButton
 extends BaseButton
 
-@export var focus_entered_sound: Resource
-@export var pressed_sound: Resource
+@export var focus_entered_sound: Resource = load("res://audio/ui/button/hover.mp3")
+@export var pressed_sound: Resource = load("res://audio/ui/button/press.mp3")
 @export var pitch_variation: = 0.2
 @export var grab_focus_with_mouse: = true
 

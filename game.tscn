@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bkeg2itkwy8vv"]
+[gd_scene load_steps=24 format=3 uid="uid://bkeg2itkwy8vv"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_coqbl"]
 [ext_resource type="Environment" uid="uid://d08mq5h5li88u" path="res://space_envirnonment.tres" id="1_yhgbs"]
@@ -12,58 +12,10 @@
 [ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://entity/player/player.tscn" id="9_ghdpd"]
 [ext_resource type="PackedScene" uid="uid://8buu23xnfxtx" path="res://ui/hud/hud.tscn" id="10_twbui"]
 [ext_resource type="PackedScene" uid="uid://dx0665xaf2c0v" path="res://main_menu.tscn" id="11_g6034"]
-
-[sub_resource type="Animation" id="Animation_pyrrm"]
-resource_name = "loading_main_screen"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Player:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(10.556, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Border:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("HudLayer/MainMenu:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.9),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Player/Thruster:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
+[ext_resource type="PackedScene" uid="uid://b303h11hxvje8" path="res://game_type_menu.tscn" id="13_bpyrg"]
+[ext_resource type="Script" path="res://enemy_spawner.gd" id="13_xygu3"]
+[ext_resource type="PackedScene" uid="uid://bajngsmhlxlno" path="res://entity/enemy/asteroid/asteroid.tscn" id="14_e4jav"]
+[ext_resource type="Script" path="res://wave_handler.gd" id="15_qlug7"]
 
 [sub_resource type="Animation" id="Animation_ewabq"]
 length = 0.001
@@ -102,6 +54,58 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_pyrrm"]
+resource_name = "loading_main_screen"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(10.556, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Border:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("UILayer/MainMenu:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Player/Thruster:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_pjpon"]
@@ -157,10 +161,22 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("HudLayer/MainMenu:visible")
+tracks/4/path = NodePath("UILayer/MainMenu:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("UILayer/GameTypeMenu:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -199,9 +215,11 @@ stream_0/weight = 1.0
 stream_1/stream = ExtResource("8_5p3rr")
 stream_1/weight = 1.0
 
-[node name="Game" type="Node" node_paths=PackedStringArray("animation_player")]
+[node name="Game" type="Node" node_paths=PackedStringArray("animation_player", "main_menu", "game_type_menu")]
 script = ExtResource("1_coqbl")
 animation_player = NodePath("AnimationPlayer")
+main_menu = NodePath("UILayer/MainMenu")
+game_type_menu = NodePath("UILayer/GameTypeMenu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -342,9 +360,13 @@ max_polyphony = 2
 
 [node name="Player" parent="." instance=ExtResource("9_ghdpd")]
 
-[node name="HudLayer" type="CanvasLayer" parent="."]
+[node name="Thruster" parent="Player" index="6"]
+position = Vector2(0, 0)
+scale = Vector2(0.2, 0.2)
 
-[node name="Version" type="Control" parent="HudLayer"]
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="Version" type="Control" parent="UILayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -352,7 +374,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="HudLayer/Version"]
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/Version"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -364,11 +386,11 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HudLayer/Version/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/Version/MarginContainer"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="HudLayer/Version/MarginContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="UILayer/Version/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 12
@@ -376,17 +398,60 @@ text = "Linux Game Jam Release v0.0.0.0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Hud" parent="HudLayer" instance=ExtResource("10_twbui")]
+[node name="Hud" parent="UILayer" instance=ExtResource("10_twbui")]
 visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 1888.0
+offset_bottom = 1048.0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="MainMenu" parent="HudLayer" instance=ExtResource("11_g6034")]
+[node name="MainMenu" parent="UILayer" instance=ExtResource("11_g6034")]
 visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 1888.0
+offset_bottom = 1048.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="GameTypeMenu" parent="UILayer" instance=ExtResource("13_bpyrg")]
+visible = false
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 1888.0
+offset_bottom = 1048.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("13_xygu3")
+max_spawn_radius = 500.0
+avoid_radius = 1000.0
+enemy_scene = ExtResource("14_e4jav")
+player = NodePath("../Player")
+max_attempts = 8
+
+[node name="WaveHandler" type="Node" parent="."]
+script = ExtResource("15_qlug7")
 
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Randomize" to="DebugLayer/Debug" method="_on_randomize_pressed"]
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Drebis" to="DebugLayer/Debug" method="_on_drebis_pressed"]
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/AddLevelPoint" to="DebugLayer/Debug" method="_on_add_level_point_pressed"]
-[connection signal="pressed" from="HudLayer/MainMenu/MarginContainer/VBoxContainer/HBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="HudLayer/MainMenu/MarginContainer/VBoxContainer/HBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="UILayer/MainMenu/MarginContainer/VBoxContainer/HBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="UILayer/GameTypeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless" to="." method="_on_endless_pressed"]
+[connection signal="pressed" from="UILayer/GameTypeMenu/MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
 
 [editable path="Player"]
-[editable path="HudLayer/MainMenu"]
+[editable path="UILayer/MainMenu"]
+[editable path="UILayer/GameTypeMenu"]

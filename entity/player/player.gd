@@ -21,6 +21,7 @@ var computed_velocity: Vector2 = Vector2.ZERO
 
 
 func _ready():
+	PlayerHandler.player = self
 	thruster.rotation = target_rotation
 	thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + planet.position
 	level_points.position = Vector2(radius, 0).rotated(thruster.rotation + PI) + planet.position

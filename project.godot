@@ -23,6 +23,7 @@ buses/default_bus_layout="res://audio/game_bus_layout.tres"
 [autoload]
 
 AudioHandler="*res://singleton/audio_handler.gd"
+PlayerHandler="*res://singleton/player_handler.gd"
 InputHandler="*res://singleton/input_handler.gd"
 
 [display]

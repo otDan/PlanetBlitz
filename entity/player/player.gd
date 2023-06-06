@@ -12,6 +12,7 @@ class_name Player
 @export var thruster_particles: GPUParticles2D
 @export var thruster_particles_2: GPUParticles2D
 @export var level_points: Node2D
+@export var border: Border
 
 @export var controllable = false
 
@@ -60,8 +61,20 @@ func _process(delta):
 		velocity = velocity.lerp(desired_velocity, delta)
 	else:
 		velocity = velocity.lerp(Vector2.ZERO, deceleration * delta)
-		
+	
+	if circle_intersects_ring(position, radius, border.position, border.border_radius - (border.border_width / 2) + 10):
+		velocity *= -1.1
+	
 	move_and_slide()
+	
+	
+func circle_intersects_ring(circle_center, circle_radius, ring_center, ring_radius):
+	var distance = sqrt((ring_center[0] - circle_center[0]) ** 2 + (ring_center[1] - circle_center[1]) ** 2)
+
+	if distance < circle_radius + ring_radius and distance + circle_radius > ring_radius and distance - circle_radius < ring_radius:
+		return true
+	else:
+		return false
 
 
 func _get_radius():

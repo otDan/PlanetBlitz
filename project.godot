@@ -34,6 +34,10 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/vsync/vsync_mode=0
 
+[gui]
+
+theme/custom="res://theme/base_theme.tres"
+
 [input]
 
 ui_left={

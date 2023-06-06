@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bkeg2itkwy8vv"]
+[gd_scene load_steps=32 format=3 uid="uid://bkeg2itkwy8vv"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_coqbl"]
 [ext_resource type="Environment" uid="uid://d08mq5h5li88u" path="res://space_envirnonment.tres" id="1_yhgbs"]
@@ -11,11 +11,16 @@
 [ext_resource type="AudioStream" uid="uid://trl43xdj7qxw" path="res://audio/sounds/noise/space_background_noise_2.mp3" id="8_5p3rr"]
 [ext_resource type="PackedScene" uid="uid://dry3qo3lt13bc" path="res://entity/player/player.tscn" id="9_ghdpd"]
 [ext_resource type="PackedScene" uid="uid://8buu23xnfxtx" path="res://ui/hud/hud.tscn" id="10_twbui"]
+[ext_resource type="Script" path="res://ui.gd" id="11_bfqtc"]
 [ext_resource type="PackedScene" uid="uid://dx0665xaf2c0v" path="res://main_menu.tscn" id="11_g6034"]
+[ext_resource type="Script" path="res://ui/wave/wave_label.gd" id="12_t4ag5"]
+[ext_resource type="PackedScene" uid="uid://dbxqrokenxrj0" path="res://options_menu.tscn" id="12_v5nkk"]
 [ext_resource type="PackedScene" uid="uid://b303h11hxvje8" path="res://game_type_menu.tscn" id="13_bpyrg"]
 [ext_resource type="Script" path="res://enemy_spawner.gd" id="13_xygu3"]
 [ext_resource type="PackedScene" uid="uid://bajngsmhlxlno" path="res://entity/enemy/asteroid/asteroid.tscn" id="14_e4jav"]
+[ext_resource type="Texture2D" uid="uid://bebbnyhb7dki3" path="res://ui/social/discord_focus.png" id="14_w2lce"]
 [ext_resource type="Script" path="res://wave_handler.gd" id="15_qlug7"]
+[ext_resource type="AudioStream" uid="uid://c37b3m4uuer4d" path="res://audio/sounds/wave/new_wave.mp3" id="20_ornc5"]
 
 [sub_resource type="Animation" id="Animation_ewabq"]
 length = 0.001
@@ -55,6 +60,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("UILayer/MainMenu:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_pyrrm"]
 resource_name = "loading_main_screen"
@@ -90,7 +107,7 @@ tracks/2/path = NodePath("UILayer/MainMenu:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.9),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -106,6 +123,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("UILayer/MainMenu:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.9),
+"transitions": PackedFloat32Array(5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_pjpon"]
@@ -215,11 +244,58 @@ stream_0/weight = 1.0
 stream_1/stream = ExtResource("8_5p3rr")
 stream_1/weight = 1.0
 
-[node name="Game" type="Node" node_paths=PackedStringArray("animation_player", "main_menu", "game_type_menu")]
+[sub_resource type="Animation" id="Animation_e8jv7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../UILayer/WaveContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_g71k4"]
+resource_name = "wave_start"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../UILayer/WaveContainer:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../UILayer/WaveContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fghxg"]
+_data = {
+"RESET": SubResource("Animation_e8jv7"),
+"wave_start": SubResource("Animation_g71k4")
+}
+
+[node name="Game" type="Node" node_paths=PackedStringArray("animation_player")]
 script = ExtResource("1_coqbl")
 animation_player = NodePath("AnimationPlayer")
-main_menu = NodePath("UILayer/MainMenu")
-game_type_menu = NodePath("UILayer/GameTypeMenu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -358,13 +434,21 @@ pitch_scale = 0.71
 autoplay = true
 max_polyphony = 2
 
-[node name="Player" parent="." instance=ExtResource("9_ghdpd")]
+[node name="Player" parent="." node_paths=PackedStringArray("border") instance=ExtResource("9_ghdpd")]
+border = NodePath("../Border")
 
 [node name="Thruster" parent="Player" index="6"]
 position = Vector2(0, 0)
 scale = Vector2(0.2, 0.2)
 
-[node name="UILayer" type="CanvasLayer" parent="."]
+[node name="UILayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("animation_player", "main_menu", "game_type_menu", "options_menu", "wave_handler", "border")]
+script = ExtResource("11_bfqtc")
+animation_player = NodePath("../AnimationPlayer")
+main_menu = NodePath("MainMenu")
+game_type_menu = NodePath("GameTypeMenu")
+options_menu = NodePath("OptionsMenu")
+wave_handler = NodePath("../WaveHandler")
+border = NodePath("../Border")
 
 [node name="Version" type="Control" parent="UILayer"]
 layout_mode = 3
@@ -398,60 +482,79 @@ text = "Linux Game Jam Release v0.0.0.0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="WaveContainer" type="Control" parent="UILayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WaveLabel" type="RichTextLabel" parent="UILayer/WaveContainer" node_paths=PackedStringArray("wave_handler")]
+clip_contents = false
+layout_mode = 2
+offset_top = 480.0
+offset_right = 1920.0
+offset_bottom = 599.0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_font_sizes/normal_font_size = 85
+bbcode_enabled = true
+text = "[center][u]Wave 1[/u]"
+fit_content = true
+scroll_active = false
+script = ExtResource("12_t4ag5")
+wave_handler = NodePath("../../../WaveHandler")
+
 [node name="Hud" parent="UILayer" instance=ExtResource("10_twbui")]
 visible = false
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 1888.0
-offset_bottom = 1048.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="MainMenu" parent="UILayer" instance=ExtResource("11_g6034")]
-visible = false
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 1888.0
-offset_bottom = 1048.0
-grow_horizontal = 1
-grow_vertical = 1
+process_mode = 3
+
+[node name="Discord" parent="UILayer/MainMenu/MarginContainer/HBoxContainer2" index="0"]
+texture_focused = ExtResource("14_w2lce")
 
 [node name="GameTypeMenu" parent="UILayer" instance=ExtResource("13_bpyrg")]
+process_mode = 3
 visible = false
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 1888.0
-offset_bottom = 1048.0
-grow_horizontal = 1
-grow_vertical = 1
 
-[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("player")]
+[node name="OptionsMenu" parent="UILayer" instance=ExtResource("12_v5nkk")]
+process_mode = 3
+visible = false
+
+[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("border", "player")]
 script = ExtResource("13_xygu3")
-max_spawn_radius = 500.0
+border = NodePath("../Border")
 avoid_radius = 1000.0
 enemy_scene = ExtResource("14_e4jav")
 player = NodePath("../Player")
 max_attempts = 8
 
-[node name="WaveHandler" type="Node" parent="."]
+[node name="WaveHandler" type="Node" parent="." node_paths=PackedStringArray("wave_player")]
 script = ExtResource("15_qlug7")
+wave_start_sound = ExtResource("20_ornc5")
+wave_player = NodePath("WavePlayer")
+
+[node name="WavePlayer" type="AnimationPlayer" parent="WaveHandler"]
+libraries = {
+"": SubResource("AnimationLibrary_fghxg")
+}
 
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Randomize" to="DebugLayer/Debug" method="_on_randomize_pressed"]
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Drebis" to="DebugLayer/Debug" method="_on_drebis_pressed"]
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/AddLevelPoint" to="DebugLayer/Debug" method="_on_add_level_point_pressed"]
-[connection signal="pressed" from="UILayer/MainMenu/MarginContainer/VBoxContainer/HBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="UILayer/GameTypeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless" to="." method="_on_endless_pressed"]
-[connection signal="pressed" from="UILayer/GameTypeMenu/MarginContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="UILayer/MainMenu/MarginContainer/HBoxContainer2/Discord" to="UILayer" method="_on_discord_pressed"]
+[connection signal="pressed" from="UILayer/MainMenu/MarginContainer/VBoxContainer/HBoxContainer/Play" to="UILayer" method="_on_play_pressed"]
+[connection signal="pressed" from="UILayer/MainMenu/MarginContainer/VBoxContainer/HBoxContainer/Options" to="UILayer" method="_on_options_pressed"]
+[connection signal="pressed" from="UILayer/MainMenu/MarginContainer/VBoxContainer/HBoxContainer/Quit" to="UILayer" method="_on_quit_pressed"]
+[connection signal="pressed" from="UILayer/GameTypeMenu/MarginContainer/VBoxContainer/HBoxContainer/Endless" to="UILayer" method="_on_game_type_endless_pressed"]
+[connection signal="pressed" from="UILayer/GameTypeMenu/MarginContainer/VBoxContainer/HBoxContainer/Back" to="UILayer" method="_on_game_type_back_pressed"]
+[connection signal="pressed" from="UILayer/OptionsMenu/MarginContainer/VBoxContainer/HBoxContainer/Back" to="UILayer" method="_on_options_back_pressed"]
 
 [editable path="Player"]
 [editable path="UILayer/MainMenu"]
 [editable path="UILayer/GameTypeMenu"]
+[editable path="UILayer/OptionsMenu"]

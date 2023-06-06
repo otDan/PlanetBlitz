@@ -1,5 +1,5 @@
 class_name Border
-extends Node2D
+extends RigidBody2D
 
 var color: Color = Color.ANTIQUE_WHITE
 
@@ -15,6 +15,7 @@ var expand_timer = 0.0
 
 func _ready():
 	# get_parent().get_node("Player").position = Vector2(30000, 0)
+	create_hollow_collision_circle(border_radius, border_width)
 	pass
 
 
@@ -36,3 +37,29 @@ func expand_circle(new_radius: float, new_width: float, duration: float):
 	target_border_width = new_width
 	expand_duration = duration
 	expand_timer = 0.0
+
+
+func create_hollow_collision_circle(radius, width):
+	var points = []
+
+	var angle_step = 5
+	var outer_radius = radius + width
+	var inner_radius = radius
+
+	for angle_deg in range(0, 360, angle_step):
+		var angle_rad = deg_to_rad(angle_deg)
+		var outer_x = cos(angle_rad) * outer_radius
+		var outer_y = sin(angle_rad) * outer_radius
+		points.append(Vector2(outer_x, outer_y))
+
+		var inner_x = cos(angle_rad) * inner_radius
+		var inner_y = sin(angle_rad) * inner_radius
+		points.append(Vector2(inner_x, inner_y))
+
+	var shape = ConvexPolygonShape2D.new()
+	shape.set_points(points)
+
+	var collision_shape = CollisionShape2D.new()
+	collision_shape.shape = shape
+
+	add_child(collision_shape)

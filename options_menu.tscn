@@ -1,0 +1,105 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbxqrokenxrj0"]
+
+[ext_resource type="Script" path="res://ui/button/sound_button.gd" id="1_06emq"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="GeneralSlider" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/GeneralSlider"]
+layout_mode = 2
+alignment = 1
+
+[node name="VSlider" type="VSlider" parent="MarginContainer/HBoxContainer/GeneralSlider/HBoxContainer"]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/GeneralSlider"]
+layout_mode = 2
+text = "General"
+
+[node name="MusicSlider" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MusicSlider"]
+layout_mode = 2
+alignment = 1
+
+[node name="VSlider" type="VSlider" parent="MarginContainer/HBoxContainer/MusicSlider/HBoxContainer"]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MusicSlider"]
+layout_mode = 2
+text = "Music"
+
+[node name="AmbientSlider" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/AmbientSlider"]
+layout_mode = 2
+alignment = 1
+
+[node name="VSlider" type="VSlider" parent="MarginContainer/HBoxContainer/AmbientSlider/HBoxContainer"]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/AmbientSlider"]
+layout_mode = 2
+text = "Ambient"
+
+[node name="EffectsSlider" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/EffectsSlider"]
+layout_mode = 2
+alignment = 1
+
+[node name="VSlider" type="VSlider" parent="MarginContainer/HBoxContainer/EffectsSlider/HBoxContainer"]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/EffectsSlider"]
+layout_mode = 2
+text = "Effects"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Back"
+script = ExtResource("1_06emq")

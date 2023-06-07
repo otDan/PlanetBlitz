@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 	var angle = mouse_position.angle()
 
 	# Calculate the new position of the sprite based on the angle and radius
-	var new_position = Vector2(cos(angle), sin(angle)) * (player.radius + 50)
+	var new_position = Vector2(cos(angle), sin(angle)) * (player.radius)
 
 	# Update the position of the sprite
 	self.position = new_position
@@ -36,5 +36,5 @@ func shoot() -> void:
 
 	if bullet_instance is RigidBody2D:
 		bullet_instance.linear_velocity = velocity
-		
+
 	AudioHandler.play_sound(shoot_sound)

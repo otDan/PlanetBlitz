@@ -23,6 +23,8 @@ scale_max = 0.02
 [node name="Bullet" type="RigidBody2D"]
 collision_layer = 8
 collision_mask = 8
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_vnqjv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

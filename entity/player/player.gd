@@ -50,24 +50,24 @@ func _process(delta):
 		thruster_particles.emitting = false
 		thruster_particles_2.emitting = false
 		return
-	
+
 	# TODO: Add cooldown to shooting automatically using the fire_rate
 	if shooting_cooldown > 0:
 		shooting_cooldown -= delta
 	else:
 		weapon.shoot()
 		shooting_cooldown = 1.0 / fire_rate
-		
+
 	var input_direction = InputHandler.input_direction
 
 	if input_direction != Vector2.ZERO:
 		target_rotation = input_direction.angle() + PI
-		
+
 		thruster.position = Vector2(radius, 0).rotated(thruster.rotation) + planet.position
 		thruster.rotation = lerp_angle(thruster.rotation, target_rotation, rotation_speed * delta)
-		
+
 		level_points.position = Vector2(radius + 10, 0).rotated(thruster.rotation + PI) + planet.position
-		
+
 		thruster_particles.emitting = true
 		thruster_particles_2.emitting = true
 		if not thruster_audio.playing:
@@ -76,7 +76,7 @@ func _process(delta):
 		thruster_particles.emitting = false
 		thruster_particles_2.emitting = false
 		AudioHandler.fade_out(thruster_audio)
-		
+
 	var opposite_rotation = thruster.rotation - PI
 	level_points.rotation = opposite_rotation
 
@@ -85,21 +85,25 @@ func _process(delta):
 		self.velocity = self.velocity.lerp(desired_velocity, delta)
 	else:
 		self.velocity = self.velocity.lerp(Vector2.ZERO, deceleration * delta)
-	
+
 	if circle_intersects_ring(self.position, radius, border.position, border.border_radius - (border.border_width / 2) + 10):
 		velocity *= -1.1
-	
+
 	move_and_slide()
-	
+
 
 func damage():
 	if health - 1 > 0:
 		health -= 1
 		return
-	
-	# TODO: Handle death
-	
-	
+
+	die()
+
+
+func die():
+	print("we dead")
+
+
 func circle_intersects_ring(circle_center, circle_radius, ring_center, ring_radius):
 	var distance = sqrt((ring_center[0] - circle_center[0]) ** 2 + (ring_center[1] - circle_center[1]) ** 2)
 
@@ -107,7 +111,7 @@ func circle_intersects_ring(circle_center, circle_radius, ring_center, ring_radi
 		return true
 	else:
 		return false
-		
+
 
 func add_xp(amount: int):
 	if xp + amount > next_level_xp:

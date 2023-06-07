@@ -1,4 +1,4 @@
-class_name EnemySpawner
+class_name EnemyHandler
 extends Node
 
 @export var border: Border
@@ -9,8 +9,16 @@ extends Node
 @export var delay_between_attempts: float = 0.5
 
 
+var enemies = []
+
+
 func _ready():
+	enemies.clear()
 	randomize()
+
+
+func remove_enemy(enemy: Enemy):
+	enemies.erase(enemy)
 
 
 func spawn_enemy():
@@ -35,5 +43,6 @@ func spawn_enemy():
 		var enemy_instance = enemy_scene.instantiate()
 		enemy_instance.position = spawn_position
 		add_child(enemy_instance)
+		enemies.append(enemy_instance)
 	else:
 		print("Failed to find a valid position for enemy spawn.")

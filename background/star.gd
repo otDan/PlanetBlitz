@@ -15,7 +15,7 @@ var to_update = false
 
 func _ready():
 #	blink_offset = randf() * 100
-	
+
 	var deviation = 0.25  # Maximum deviation from white
 	var red_deviation = randf_range(0, deviation)
 	var green_deviation = randf_range(0, deviation)

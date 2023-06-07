@@ -18,7 +18,7 @@ func _ready():
 	delay_timer.one_shot = true
 	delay_timer.connect("timeout", Callable(self, "_on_delay_timer_timeout"))
 	add_child(delay_timer)
-	
+
 	connect("focus_entered", Callable(self, "on_focus_entered"))
 	connect("pressed", Callable(self, "on_pressed"))
 	connect("mouse_entered", Callable(self, "on_mouse_entered"))

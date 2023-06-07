@@ -23,12 +23,11 @@ func _on_play_pressed():
 func _on_options_pressed():
 	main_menu.hide()
 	options_menu.show()
-#	get_tree().paused = true
-	
+
 
 func _on_discord_pressed():
 	OS.shell_open("https://discord.gg/cE955uZ34z")
-	
+
 
 func _on_game_type_endless_pressed():
 	animation_player.play("play")

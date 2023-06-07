@@ -343,9 +343,6 @@ process_material = SubResource("ParticleProcessMaterial_cjepr")
 lifetime = 10.0
 preprocess = 30.0
 
-[node name="Border" type="Node2D" parent="."]
-script = ExtResource("3_oqhaa")
-
 [node name="Background" type="ParallaxBackground" parent="." node_paths=PackedStringArray("camera")]
 follow_viewport_scale = 10.0
 script = ExtResource("4_rndii")
@@ -503,7 +500,7 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 12
-text = "Linux Game Jam Release v0.0.0.0"
+text = "Post Linux Game Jam Release v0.0.0.1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -552,7 +549,7 @@ visible = false
 process_mode = 3
 visible = false
 
-[node name="EnemySpawner" type="Node" parent="." node_paths=PackedStringArray("border", "player")]
+[node name="EnemyHandler" type="Node" parent="." node_paths=PackedStringArray("border", "player")]
 script = ExtResource("13_xygu3")
 border = NodePath("../Border")
 avoid_radius = 1000.0
@@ -562,7 +559,7 @@ max_attempts = 8
 
 [node name="WaveHandler" type="Node" parent="." node_paths=PackedStringArray("enemy_spawner", "wave_player")]
 script = ExtResource("15_qlug7")
-enemy_spawner = NodePath("../EnemySpawner")
+enemy_spawner = NodePath("../EnemyHandler")
 wave_start_sound = ExtResource("20_ornc5")
 wave_player = NodePath("WavePlayer")
 
@@ -570,6 +567,9 @@ wave_player = NodePath("WavePlayer")
 libraries = {
 "": SubResource("AnimationLibrary_fghxg")
 }
+
+[node name="Border" type="Node2D" parent="."]
+script = ExtResource("3_oqhaa")
 
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Randomize" to="DebugLayer/Debug" method="_on_randomize_pressed"]
 [connection signal="pressed" from="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer/Drebis" to="DebugLayer/Debug" method="_on_drebis_pressed"]

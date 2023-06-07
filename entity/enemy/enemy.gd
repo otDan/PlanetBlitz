@@ -2,5 +2,9 @@ class_name Enemy
 extends RigidBody2D
 
 
-func _ready():
-	pass
+var dead = false
+
+
+func die():
+	dead = true
+	queue_free()

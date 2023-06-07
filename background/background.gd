@@ -14,9 +14,9 @@ func generate_stars(parallaxLayer: ParallaxLayer, star_count: int, star_size_ran
 	for i in range(star_count):
 		var starInstance := Star.new()
 		starInstance.size = randf_range(star_size_range.x, star_size_range.y)
-		
+
 		var starPosition := Vector2(randf_range(spawn_area.position.x, spawn_area.position.x + spawn_area.size.x),
 									randf_range(spawn_area.position.y, spawn_area.position.y + spawn_area.size.y))
 		starInstance.position = starPosition
-		
+
 		parallaxLayer.add_child(starInstance)

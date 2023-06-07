@@ -12,10 +12,10 @@ func play_sound(audio: AudioStream, pitch_variation: float = 0.0):
 
 func fade_in(stream_player: AudioStreamPlayer2D, volume):
 	stream_player.play()
-	
+
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 	tween.tween_property(stream_player, "volume_db", -10, 0.25)
-	
+
 
 func fade_out(stream_player: AudioStreamPlayer2D):
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)

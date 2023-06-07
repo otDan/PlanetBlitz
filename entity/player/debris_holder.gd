@@ -9,7 +9,7 @@ func _process(delta: float):
 	var radius = get_parent()._get_radius() + additional_radius
 	var angle_step = TAU / debris.size()
 	var current_time = Time.get_ticks_msec() / 1000.0
-	
+
 	for i in range(debris.size()):
 		var angle = angle_step * i
 		var target_pos = Vector2(radius * cos(angle), radius * sin(angle))
@@ -28,6 +28,6 @@ func _process(delta: float):
 
 		# Calculate the previous position based on the current time
 		var previous_pos = Vector2(radius * cos(angle - current_time), radius * sin(angle - current_time))
-		
+
 		# Interpolate the sprite's position towards the previous position
 		scrap.position = scrap.position.lerp(previous_pos, delta * speed)

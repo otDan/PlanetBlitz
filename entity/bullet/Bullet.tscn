@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://wisudu7pnp38"]
+
+[ext_resource type="Script" path="res://entity/bullet/bullet.gd" id="1_vnqjv"]
+[ext_resource type="Texture2D" uid="uid://b0bqmgxygu0ns" path="res://entity/bullet/bullet.png" id="2_5hx35"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_humbi"]
+radius = 11.0
+height = 40.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_u6hct"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 12.513
+emission_ring_radius = 25.84
+emission_ring_inner_radius = 6.457
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = -1.0
+orbit_velocity_max = 1.0
+scale_min = 0.0
+scale_max = 0.02
+
+[node name="Bullet" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_vnqjv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_humbi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_5hx35")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_u6hct")
+texture = ExtResource("2_5hx35")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

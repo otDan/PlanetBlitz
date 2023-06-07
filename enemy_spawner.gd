@@ -1,3 +1,4 @@
+class_name EnemySpawner
 extends Node
 
 @export var border: Border

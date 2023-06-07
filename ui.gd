@@ -5,6 +5,7 @@ extends CanvasLayer
 @export var main_menu: Control
 @export var game_type_menu: Control
 @export var options_menu: Control
+@export var hud: Control
 
 @export var wave_handler: WaveHandler
 @export var border: Border
@@ -32,7 +33,8 @@ func _on_discord_pressed():
 func _on_game_type_endless_pressed():
 	animation_player.play("play")
 	wave_handler.wave_start(1)
-#	border.expand_circle(5000, 2000, 1500.0)
+	hud.show()
+	border.expand_circle(5000, 2000, 1500.0)
 
 
 func _on_game_type_back_pressed():

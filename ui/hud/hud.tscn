@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://8buu23xnfxtx"]
+[gd_scene load_steps=5 format=3 uid="uid://8buu23xnfxtx"]
 
 [ext_resource type="Theme" uid="uid://4jfbuh74ci0i" path="res://theme/base_theme.tres" id="1_4kkm5"]
 [ext_resource type="PackedScene" uid="uid://exlqa524agd" path="res://ui/hud/level/level_bar.tscn" id="1_csm2t"]
+[ext_resource type="Script" path="res://ui/hud/hud.gd" id="2_htg8d"]
 [ext_resource type="Texture2D" uid="uid://ddjp4lhdscd4v" path="res://ui/hud/shop/shop.png" id="2_hv717"]
 
-[node name="Hud" type="Control"]
+[node name="Hud" type="Control" node_paths=PackedStringArray("progress_bar", "level_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +13,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_4kkm5")
+script = ExtResource("2_htg8d")
+progress_bar = NodePath("MarginContainer/HBoxContainer/VBoxContainer/LevelBar/Scaling/TextureProgressBar")
+level_label = NodePath("MarginContainer/HBoxContainer/VBoxContainer/LevelBar/Scaling/LevelLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -58,3 +62,5 @@ grow_vertical = 2
 texture = ExtResource("2_hv717")
 expand_mode = 3
 stretch_mode = 5
+
+[editable path="MarginContainer/HBoxContainer/VBoxContainer/LevelBar"]

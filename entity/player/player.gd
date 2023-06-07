@@ -3,10 +3,11 @@ class_name Player
 
 @export var target_rotation: float = PI  # Set the target rotation for left side
 @export var rotation_speed: float = 1.0  # Adjust the rotation speed as needed
-@export var acceleration: float = 150.0  # Adjust the acceleration as needed
+@export var base_acceleration: float = 150.0  # Adjust the acceleration as needed
 @export var deceleration: float = 2.0  # Adjust the deceleration as needed
 
 @export var planet: Sprite2D
+@export var weapon: Weapon
 @export var thruster: Node2D
 @export var thruster_audio: AudioStreamPlayer2D
 @export var thruster_particles: GPUParticles2D
@@ -19,6 +20,22 @@ class_name Player
 var radius: float = 100.0 :
 	get: return _get_radius()
 var computed_velocity: Vector2 = Vector2.ZERO
+
+var health = 3
+var level = 1
+var xp = 0
+var next_level_xp = 100
+var speed = 1
+var fire_rate = 1
+
+var _speed_gain_per_level = 10
+var _fire_rate_per_level = 1
+
+var acceleration: float = 1.0:
+	get:
+		return base_acceleration + (speed * _speed_gain_per_level)
+
+var shooting_cooldown: float = 0.0
 
 
 func _ready():
@@ -33,6 +50,13 @@ func _process(delta):
 		thruster_particles.emitting = false
 		thruster_particles_2.emitting = false
 		return
+	
+	# TODO: Add cooldown to shooting automatically using the fire_rate
+	if shooting_cooldown > 0:
+		shooting_cooldown -= delta
+	else:
+		weapon.shoot()
+		shooting_cooldown = 1.0 / fire_rate
 		
 	var input_direction = InputHandler.input_direction
 
@@ -58,14 +82,22 @@ func _process(delta):
 
 	if input_direction != Vector2.ZERO:
 		var desired_velocity = -(thruster.position - planet.position).normalized() * acceleration
-		velocity = velocity.lerp(desired_velocity, delta)
+		self.velocity = self.velocity.lerp(desired_velocity, delta)
 	else:
-		velocity = velocity.lerp(Vector2.ZERO, deceleration * delta)
+		self.velocity = self.velocity.lerp(Vector2.ZERO, deceleration * delta)
 	
-	if circle_intersects_ring(position, radius, border.position, border.border_radius - (border.border_width / 2) + 10):
+	if circle_intersects_ring(self.position, radius, border.position, border.border_radius - (border.border_width / 2) + 10):
 		velocity *= -1.1
 	
 	move_and_slide()
+	
+
+func damage():
+	if health - 1 > 0:
+		health -= 1
+		return
+	
+	# TODO: Handle death
 	
 	
 func circle_intersects_ring(circle_center, circle_radius, ring_center, ring_radius):
@@ -75,6 +107,16 @@ func circle_intersects_ring(circle_center, circle_radius, ring_center, ring_radi
 		return true
 	else:
 		return false
+		
+
+func add_xp(amount: int):
+	if xp + amount > next_level_xp:
+		level+=1
+		add_xp(amount)
+	elif xp + amount == next_level_xp:
+		level+=1
+	else:
+		xp += amount
 
 
 func _get_radius():

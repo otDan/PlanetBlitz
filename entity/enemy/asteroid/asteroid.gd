@@ -1,12 +1,14 @@
-extends RigidBody2D
+extends Enemy
 
 @export var attraction_force = 100.0
 @export var asteroid_type = "asteroid"
 
 var asteroids
 
+
 func _ready():
 	asteroids = get_tree().get_nodes_in_group(asteroid_type)
+
 
 func _physics_process(delta):
 	var direction_to_player = PlayerHandler.player.global_position - global_position
@@ -27,3 +29,12 @@ func _physics_process(delta):
 	
 	var move_force = direction_to_player * attraction_force
 	apply_central_force(move_force)
+
+
+func destroy():
+	queue_free()
+
+
+func _on_body_entered(body):
+	if body is Player:
+		body.damage()

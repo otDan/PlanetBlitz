@@ -136,6 +136,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Player/WeaponHolder:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_pjpon"]
 resource_name = "play"
@@ -210,6 +222,18 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Player/WeaponHolder:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_reqnb"]
@@ -412,7 +436,7 @@ layout_mode = 2
 size_flags_vertical = 8
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="DebugLayer/Debug/Display/MarginContainer/HBoxContainer"]
+[node name="VBoxContainer" type="HBoxContainer" parent="DebugLayer/Debug/Display/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
 [node name="Randomize" type="Button" parent="DebugLayer/Debug/Display/MarginContainer/HBoxContainer/VBoxContainer"]
@@ -441,12 +465,13 @@ border = NodePath("../Border")
 position = Vector2(0, 0)
 scale = Vector2(0.2, 0.2)
 
-[node name="UILayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("animation_player", "main_menu", "game_type_menu", "options_menu", "wave_handler", "border")]
+[node name="UILayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("animation_player", "main_menu", "game_type_menu", "options_menu", "hud", "wave_handler", "border")]
 script = ExtResource("11_bfqtc")
 animation_player = NodePath("../AnimationPlayer")
 main_menu = NodePath("MainMenu")
 game_type_menu = NodePath("GameTypeMenu")
 options_menu = NodePath("OptionsMenu")
+hud = NodePath("Hud")
 wave_handler = NodePath("../WaveHandler")
 border = NodePath("../Border")
 
@@ -508,11 +533,13 @@ scroll_active = false
 script = ExtResource("12_t4ag5")
 wave_handler = NodePath("../../../WaveHandler")
 
-[node name="Hud" parent="UILayer" instance=ExtResource("10_twbui")]
+[node name="Hud" parent="UILayer" node_paths=PackedStringArray("player") instance=ExtResource("10_twbui")]
 visible = false
+player = NodePath("../../Player")
 
 [node name="MainMenu" parent="UILayer" instance=ExtResource("11_g6034")]
 process_mode = 3
+visible = false
 
 [node name="Discord" parent="UILayer/MainMenu/MarginContainer/HBoxContainer2" index="0"]
 texture_focused = ExtResource("14_w2lce")
@@ -533,8 +560,9 @@ enemy_scene = ExtResource("14_e4jav")
 player = NodePath("../Player")
 max_attempts = 8
 
-[node name="WaveHandler" type="Node" parent="." node_paths=PackedStringArray("wave_player")]
+[node name="WaveHandler" type="Node" parent="." node_paths=PackedStringArray("enemy_spawner", "wave_player")]
 script = ExtResource("15_qlug7")
+enemy_spawner = NodePath("../EnemySpawner")
 wave_start_sound = ExtResource("20_ornc5")
 wave_player = NodePath("WavePlayer")
 
@@ -555,6 +583,8 @@ libraries = {
 [connection signal="pressed" from="UILayer/OptionsMenu/MarginContainer/VBoxContainer/HBoxContainer/Back" to="UILayer" method="_on_options_back_pressed"]
 
 [editable path="Player"]
+[editable path="UILayer/Hud"]
+[editable path="UILayer/Hud/MarginContainer/HBoxContainer/VBoxContainer/LevelBar"]
 [editable path="UILayer/MainMenu"]
 [editable path="UILayer/GameTypeMenu"]
 [editable path="UILayer/OptionsMenu"]

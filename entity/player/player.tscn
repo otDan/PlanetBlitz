@@ -1,11 +1,14 @@
-[gd_scene load_steps=32 format=3 uid="uid://dry3qo3lt13bc"]
+[gd_scene load_steps=35 format=3 uid="uid://dry3qo3lt13bc"]
 
 [ext_resource type="Script" path="res://entity/player/player.gd" id="1_cf7dl"]
 [ext_resource type="Texture2D" uid="uid://dwocvptbnldog" path="res://entity/player/planet.png" id="2_fmb1y"]
 [ext_resource type="Script" path="res://entity/player/planet.gd" id="3_e4lak"]
 [ext_resource type="Texture2D" uid="uid://cax7jaqu7wpi3" path="res://entity/player/thruster.png" id="4_2vimk"]
-[ext_resource type="Script" path="res://entity/player/weapon_holder.gd" id="4_is4a8"]
 [ext_resource type="Texture2D" uid="uid://duolr8ykh6o67" path="res://entity/particle.png" id="4_xvap4"]
+[ext_resource type="Texture2D" uid="uid://ce2vieb0afy3t" path="res://entity/weapon/basic_weapon.png" id="5_dil4i"]
+[ext_resource type="PackedScene" uid="uid://wisudu7pnp38" path="res://entity/bullet/Bullet.tscn" id="5_kxpch"]
+[ext_resource type="Script" path="res://entity/weapon/weapon.gd" id="5_m1mmf"]
+[ext_resource type="AudioStream" uid="uid://pw7dowowjfe7" path="res://audio/sounds/entity/weapon/shoot.mp3" id="6_7qfxe"]
 [ext_resource type="AudioStream" uid="uid://bmenkjfdud6j3" path="res://audio/sounds/rocket_engine.mp3" id="6_kvf8v"]
 [ext_resource type="Script" path="res://entity/player/level_points.gd" id="7_mko50"]
 [ext_resource type="Script" path="res://entity/player/debris_holder.gd" id="7_oxtvt"]
@@ -123,11 +126,12 @@ color_ramp = SubResource("GradientTexture1D_6f0nh")
 turbulence_enabled = true
 turbulence_noise_scale = 4.24
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("planet", "thruster", "thruster_audio", "thruster_particles", "thruster_particles_2", "level_points")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("planet", "weapon", "thruster", "thruster_audio", "thruster_particles", "thruster_particles_2", "level_points")]
 motion_mode = 1
 script = ExtResource("1_cf7dl")
 deceleration = 1.0
 planet = NodePath("Planet/Planet")
+weapon = NodePath("WeaponHolder/Weapon")
 thruster = NodePath("Thruster")
 thruster_audio = NodePath("Thruster/ThrusterParticles/ThrusterEngine")
 thruster_particles = NodePath("Thruster/ThrusterParticles")
@@ -155,7 +159,21 @@ script = ExtResource("7_oxtvt")
 speed = 1.0
 
 [node name="WeaponHolder" type="Node2D" parent="."]
-script = ExtResource("4_is4a8")
+
+[node name="Weapon" type="Node2D" parent="WeaponHolder" node_paths=PackedStringArray("player", "shoot_posiiton")]
+position = Vector2(200, 0)
+script = ExtResource("5_m1mmf")
+player = NodePath("../..")
+bullet = ExtResource("5_kxpch")
+shoot_posiiton = NodePath("ShootPosition")
+shoot_sound = ExtResource("6_7qfxe")
+
+[node name="Sprite2D" type="Sprite2D" parent="WeaponHolder/Weapon"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("5_dil4i")
+
+[node name="ShootPosition" type="Node2D" parent="WeaponHolder/Weapon"]
+position = Vector2(50, 0)
 
 [node name="Planet" type="Node2D" parent="."]
 
